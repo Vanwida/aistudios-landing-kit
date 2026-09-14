@@ -64,11 +64,15 @@ if (fetchError) {
 }
 
 const remote = JSON.parse(git('show', `${ref}:kit.json`));
-const same = remote.version === local.version;
+// "Up to date" means the system files really match the kit — not just the version label,
+// so a kit change pushed without bumping the version still arrives.
+const system = remote.system || local.system;
+const sameFiles = tryGit('diff', '--quiet', 'HEAD', ref, '--', ...system) !== null;
+const same = remote.version === local.version && sameFiles;
 
 if (CHECK) {
   console.log(`RESULT: ${same ? 'UP_TO_DATE' : 'UPDATE_AVAILABLE'}`);
-  console.log(`installed ${local.version} · available ${remote.version}`);
+  console.log(`installed ${local.version} · available ${remote.version}${sameFiles ? '' : ' (system files differ)'}`);
   process.exit(0);
 }
 if (same && !FORCE) {
@@ -86,7 +90,6 @@ const before = git('rev-parse', 'HEAD');
 
 // Replace each system path with the remote copy. Use the REMOTE list, so files the kit added
 // since this project was created come in too; a path gone from the kit is removed here as well.
-const system = remote.system || local.system;
 for (const p of system) {
   tryGit('rm', '-r', '-q', '--ignore-unmatch', '--', p);
   tryGit('checkout', '-q', ref, '--', p);
