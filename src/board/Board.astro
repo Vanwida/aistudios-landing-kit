@@ -3,8 +3,9 @@
   PROJECT BOARD — the designer's view of the project. Preview only (never built).
   Everything shown here is generated from brief/, src/styles/tokens.css and git.
 */
-import { loadBrief } from './brief-data.mjs';
+import { loadBrief, loadSettings } from './brief-data.mjs';
 const b = loadBrief();
+const st = loadSettings();
 const title = b.client ? `${b.client} — board` : 'Project board';
 const statusWord = (s) => (s.built ? (s.motion ? 'built · motion' : 'built') : s.inProgress ? 'building' : 'not yet');
 ---
@@ -80,6 +81,17 @@ const statusWord = (s) => (s.built ? (s.motion ? 'built · motion' : 'built') : 
       .log div:first-child { border-top:0; }
       .log .d { font-family:var(--mono); font-size:12px; color:var(--ink3); }
       .foot { padding-top:22px; font-size:12.5px; color:var(--ink3); font-family:var(--mono); display:flex; flex-wrap:wrap; gap:8px 18px; }
+      /* settings — values pasted by the designer, written to .env on this computer */
+      .settings { display:grid; gap:10px; }
+      .setting { background:var(--raised); border:1px solid var(--line); border-radius:12px; padding:14px 18px; display:grid; grid-template-columns:minmax(200px,1fr) minmax(260px,1.4fr); gap:8px 24px; align-items:center; }
+      .setting .lbl { display:grid; gap:2px; } .setting .lbl b { font-weight:600; } .setting .lbl span { font-size:13.5px; color:var(--ink2); }
+      .setting .val { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+      .setting input { flex:1 1 180px; min-width:0; font:inherit; font-family:var(--mono); font-size:13px; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); }
+      .setting button { font:inherit; font-size:13px; font-weight:500; padding:8px 12px; border-radius:8px; border:1px solid var(--line); background:var(--raised); color:var(--ink); cursor:pointer; }
+      .setting button[type="submit"] { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+      .setting .msg { grid-column:1 / -1; font-size:13px; color:var(--ink2); min-height:1em; }
+      .setting .msg.ok { color:var(--accent); } .setting .msg.err { color:var(--warn); }
+      @media (max-width:640px) { .setting { grid-template-columns:1fr; } }
     </style>
   </head>
   <body>
@@ -92,6 +104,7 @@ const statusWord = (s) => (s.built ? (s.motion ? 'built · motion' : 'built') : 
         <div class="meta">
           <span><b>{b.counts.built}</b> of <b>{b.counts.total}</b> sections built</span>
           <span><b>{b.counts.animated}</b> with motion</span>
+          {st.missing > 0 && <span><a href="#settings"><b>{st.missing}</b> {st.missing > 1 ? 'settings' : 'setting'} needed</a></span>}
           {b.branch && <span>save points on <b>{b.branch}</b></span>}
           {b.remote && <span><a href={b.remote.replace(/\.git$/, '').replace(/^git@github\.com:/, 'https://github.com/')} target="_blank" rel="noopener">GitHub ↗</a></span>}
           <span><a href="/" target="_blank" rel="noopener">Preview ↗</a></span>
@@ -159,6 +172,26 @@ const statusWord = (s) => (s.built ? (s.motion ? 'built · motion' : 'built') : 
         </section>
       )}
 
+      {st.requests.length > 0 && (
+        <section id="settings">
+          <div class="sec-head"><h2>Settings</h2><span class="eyebrow">values stay on this computer · Claude never sees them</span></div>
+          <div class="settings">
+            {st.requests.map((r) => (
+              <form class="setting" data-key={r.key} autocomplete="off">
+                <div class="lbl"><b>{r.label || r.key}</b>{r.help && <span>{r.help}</span>}</div>
+                <div class="val">
+                  <span class={`badge ${st.set.has(r.key) ? 'on' : 'warn'}`}>{st.set.has(r.key) ? 'set' : 'needed'}</span>
+                  <input type="password" name="setting" autocomplete="off" spellcheck="false" placeholder={st.set.has(r.key) ? 'paste a new value to replace it' : 'paste the value here'} aria-label={r.label || r.key} required />
+                  <button type="submit">Save</button>
+                  {st.set.has(r.key) && <button type="button" data-remove>Remove</button>}
+                </div>
+                <p class="msg" aria-live="polite"></p>
+              </form>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section id="tokens">
         <div class="sec-head"><h2>Design tokens</h2><span class="eyebrow">from src/styles/tokens.css</span></div>
         <div class="swatches">
@@ -193,7 +226,28 @@ const statusWord = (s) => (s.built ? (s.motion ? 'built · motion' : 'built') : 
       <div class="foot"><span>updated {b.generatedAt}</span><span>refreshes every 30 s</span><span>this page exists only in the preview — it is never published</span></div>
     </div>
     <script>
-      setInterval(() => { if (!document.hidden) location.reload(); }, 30000);
+      // Auto-refresh, paused while the designer is typing a setting.
+      const typingASetting = () => !!(document.activeElement && document.activeElement.closest('#settings'));
+      setInterval(() => { if (!document.hidden && !typingASetting()) location.reload(); }, 30000);
+
+      // Settings: the value goes browser → local dev server → .env. Never through Claude.
+      async function saveSetting(form: HTMLFormElement, value: string | null) {
+        const msg = form.querySelector('.msg') as HTMLElement;
+        msg.className = 'msg'; msg.textContent = 'Saving…';
+        try {
+          const r = await fetch('/board/env', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key: form.dataset.key, value }) });
+          const j = await r.json();
+          if (!j.ok) throw new Error(j.message || 'Could not save.');
+          msg.className = 'msg ok'; msg.textContent = value === null ? 'Removed.' : 'Saved. The preview restarts by itself.';
+          setTimeout(() => location.reload(), 1200);
+        } catch (e) {
+          msg.className = 'msg err'; msg.textContent = e instanceof Error ? e.message : 'Could not save.';
+        }
+      }
+      document.querySelectorAll<HTMLFormElement>('form.setting').forEach((form) => {
+        form.addEventListener('submit', (e) => { e.preventDefault(); saveSetting(form, (form.elements.namedItem('setting') as HTMLInputElement).value); });
+        form.querySelector('[data-remove]')?.addEventListener('click', () => saveSetting(form, null));
+      });
     </script>
   </body>
 </html>

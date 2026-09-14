@@ -82,3 +82,14 @@ export function loadBrief() {
     generatedAt: new Date().toLocaleString('en-GB', { hour12: false }),
   };
 }
+
+/*
+  Settings the designer pastes on the board — Claude requests them in brief/settings.json.
+  Only key NAMES are read from .env here, to show "set" or "needed". Never values.
+*/
+export function loadSettings() {
+  const requests = (readJson('brief/settings.json', { settings: [] }).settings || []).filter((r) => r && typeof r.key === 'string');
+  const env = readText('.env') || '';
+  const set = new Set(env.split('\n').map((l) => l.split('=')[0].trim()).filter((k) => /^[A-Z][A-Z0-9_]*$/.test(k)));
+  return { requests, set, missing: requests.filter((r) => !set.has(r.key)).length };
+}

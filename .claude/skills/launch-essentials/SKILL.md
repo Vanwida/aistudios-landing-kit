@@ -53,7 +53,7 @@ const accessKey = import.meta.env.PUBLIC_FORM_KEY;       // Web3Forms key (publi
   });
 </script>
 ```
-Set the endpoint/key as Vercel environment variables — `npx vercel env add PUBLIC_FORM_ENDPOINT production preview`, same for `PUBLIC_FORM_KEY` — so the live site and the preview links have them. **You never write `.env`** (it's the designer's file; the permission rules block it). If they want the form working in the local preview too, tell them the exact two lines to paste into `.env`. Ask the designer only: "Which email should receive the messages?" Then set up the service with that email (Web3Forms: enter the email on their site → key arrives by email → the designer adds it where you told them, never in chat).
+Set the endpoint/key as Vercel environment variables — `npx vercel env add PUBLIC_FORM_ENDPOINT production preview`, same for `PUBLIC_FORM_KEY` — so the live site and the preview links have them. **You never write `.env`** (it's the designer's file; the permission rules block it). For the local preview, request the same keys in `brief/settings.json` (label + help in plain words) and the designer pastes the values on the board → **Settings**; they land in `.env` on their computer. Ask the designer only: "Which email should receive the messages?" Then set up the service with that email (Web3Forms: enter the email on their site → key arrives by email → the designer pastes it on the board → Settings, never in chat).
 
 Consent: a form that collects personal data needs a privacy notice link next to the button ("By sending you agree to our privacy policy").
 
