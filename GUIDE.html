@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talk. Look. Next.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #f6f6f2; --bg-raised: #fbfbf8; --ink: #17191b; --ink-2: #5a5f5c; --ink-3: #8b918d;
+    --line: #dcdfd9; --accent: #1f6f5f; --accent-ink: #fff; --accent-soft: #e2efe9;
+    --calm: #6b5f3b; --calm-soft: #edeae2;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --radius: 12px; --gap: 12px; --pad: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.45; padding-inline: clamp(16px, 3vw, 32px); padding-block: 0 72px; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  h1, h2 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; line-height: 1; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(40px, 7vw, 72px); }
+  h2 { font-size: clamp(24px, 3vw, 32px); }
+  p { margin: 0; }
+  svg.i { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+  .wrap { max-width: 1040px; margin-inline: auto; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+
+  /* Pills — the words you say */
+  .pill { display: inline-block; font-family: var(--font-mono); font-size: 14px; background: var(--accent-soft); color: var(--ink); padding: 4px 10px; border-radius: 8px; }
+  .pill.strong { background: var(--ink); color: var(--bg); }
+  .step, .word, .tile { min-width: 0; }
+
+  /* Sticky bar: the two words + the two places */
+  .bar { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); margin-inline: calc(-1 * clamp(16px, 3vw, 32px)); padding-inline: clamp(16px, 3vw, 32px); }
+  .bar .in { max-width: 1040px; margin-inline: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; padding-block: 10px; }
+  .cmd { display: grid; gap: 2px; }
+  .cmd .pill { font-size: 17px; padding: 6px 12px; white-space: nowrap; }
+  .cmd small { font-size: 12px; color: var(--ink-2); padding-left: 2px; }
+  .places { display: flex; gap: 8px; margin-left: auto; }
+  .place { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px 6px 10px; font-size: 13px; background: var(--bg-raised); }
+  .place svg.i { width: 18px; height: 18px; color: var(--accent); }
+  .place code { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); }
+
+  /* Header */
+  .head { padding-block: 40px 28px; display: grid; gap: 14px; }
+  .head p { color: var(--ink-2); font-size: 17px; max-width: 46ch; }
+  .head p b { color: var(--ink); font-weight: 500; }
+
+  section { padding-block: 28px; }
+  .sh { display: flex; align-items: baseline; gap: 14px; margin-bottom: 16px; }
+  .sh .eyebrow { margin-left: auto; }
+
+  /* The loop */
+  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--gap); }
+  .step { position: relative; text-align: left; font: inherit; color: inherit; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); display: grid; gap: 12px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .step:hover { border-color: var(--ink-3); }
+  .step .top { display: flex; align-items: center; gap: 10px; }
+  .step .n { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
+  .step .top svg.i { color: var(--accent); width: 26px; height: 26px; }
+  .step h3 { font-family: var(--font-display); font-weight: 400; font-size: 27px; line-height: 1; margin: 0; }
+  .row { display: grid; grid-template-columns: 18px 1fr; gap: 8px; align-items: start; font-size: 14px; color: var(--ink-2); }
+  .row svg.i { width: 18px; height: 18px; color: var(--ink-3); margin-top: 3px; }
+  .row .pills { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .row .pills .or { font-size: 12px; color: var(--ink-3); }
+  .step .tag { position: absolute; top: 12px; right: 12px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; border-radius: 4px; display: none; }
+  .step.here { border: 2px solid var(--accent); background: var(--accent-soft); padding: calc(var(--pad) - 1px); }
+  .step.here .tag.here { display: block; background: var(--accent); color: var(--accent-ink); }
+  .step.next .tag.next { display: block; background: var(--calm-soft); color: var(--calm); }
+  .hint { font-size: 12px; color: var(--ink-3); margin-top: 10px; }
+
+  /* Words */
+  .words { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px 22px; }
+  .word { display: grid; gap: 4px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .word small { font-size: 13px; color: var(--ink-2); }
+
+  /* Stuck */
+  .stuck { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--gap); }
+  .tile { background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px var(--pad); display: grid; gap: 10px; align-content: start; }
+  .tile .sit { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 15px; }
+  .tile .sit svg.i { color: var(--calm); }
+  .tile .pill { justify-self: start; }
+  .tile small { font-size: 12.5px; color: var(--ink-2); }
+
+  /* Never / only you */
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px 40px; }
+  .list { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+  .list li { display: flex; align-items: center; gap: 10px; padding-block: 6px; border-top: 1px solid var(--line); font-size: 15px; }
+  .list.never li svg.i { color: var(--ink-3); width: 20px; height: 20px; }
+  .list.never li { color: var(--ink-2); }
+  .list.you li svg.i { color: var(--accent); width: 20px; height: 20px; }
+
+  /* Footer */
+  .foot { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 20px; font-size: 13.5px; color: var(--ink-2); }
+  .foot .fr { display: flex; align-items: center; gap: 10px; }
+  .foot code { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); background: var(--bg-raised); border: 1px solid var(--line); padding: 2px 7px; border-radius: 5px; }
+  .foot svg.i { width: 18px; height: 18px; color: var(--ink-3); }
+
+  @media (max-width: 560px) {
+    .places { margin-left: 0; width: 100%; }
+    .place code { display: none; }
+    .head { padding-top: 28px; }
+  }
+  @media print {
+    .bar { position: static; backdrop-filter: none; }
+    .step, .tile { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-start" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1L18.5 8.5a2.1 2.1 0 0 0-3-3L5 16z"/><path d="M13.5 6.5l3 3"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="M8 11l4 4 4-4"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></symbol>
+  <symbol id="i-build" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="5" rx="1"/><rect x="4" y="11" width="16" height="5" rx="1"/><path d="M4 20h16"/></symbol>
+  <symbol id="i-motion" viewBox="0 0 24 24"><path d="M3 8h9a3 3 0 1 0-3-3"/><path d="M3 12h14a3 3 0 1 1-3 3"/><path d="M3 16h7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></symbol>
+  <symbol id="i-ship" viewBox="0 0 24 24"><path d="M5 19L19 5"/><path d="M9 5h10v10"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-say" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4z"/></symbol>
+  <symbol id="i-frame" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M9 4v16"/></symbol>
+  <symbol id="i-board" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-window" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l9.5 16.5H2.5z"/><path d="M12 10v4"/><path d="M12 17.5h.01"/></symbol>
+  <symbol id="i-mismatch" viewBox="0 0 24 24"><rect x="3" y="3" width="12" height="12" rx="1.5"/><rect x="9" y="9" width="12" height="12" rx="1.5"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h12l-3-3"/><path d="M20 16H8l3 3"/></symbol>
+  <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="M11 11l9-9M16 6l2 2M13 9l2 2"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 10h1.5a2 2 0 0 1 0 4H16"/><path d="M8 5v1M11 5v1"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol>
+  <symbol id="i-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="i-you" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h13"/></symbol>
+</svg>
+
+<nav class="bar" aria-label="Always">
+  <div class="in">
+    <div class="cmd"><span class="pill strong">/start</span><small>where do you want to begin?</small></div>
+    <div class="cmd"><span class="pill strong">/help</span><small>where am I, what's next?</small></div>
+    <div class="places">
+      <a class="place" href="http://localhost:4321" target="_blank" rel="noopener"><svg class="i"><use href="#i-window"/></svg>Preview <code>:4321</code></a>
+      <a class="place" href="http://localhost:4321/board" target="_blank" rel="noopener"><svg class="i"><use href="#i-board"/></svg>Board <code>/board</code></a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="head">
+    <p class="eyebrow">AISTUDIOS Landing Kit · keep this tab open</p>
+    <h1>Talk. Look. Next.</h1>
+    <p>You say a word. Claude builds. You look at the <b>preview</b> and the <b>board</b>, and say what's off — in your words. <b>Click the options</b> it gives you. Never the terminal.</p>
+  </header>
+
+  <section id="loop">
+    <div class="sh"><h2>The loop</h2><span class="eyebrow">tap where you are</span></div>
+    <div class="steps" id="steps">
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">01</span><svg class="i"><use href="#i-start"/></svg><h3>Start</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill strong">/start</span><span class="or">→</span><span class="pill">new landing page</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Questions with options. Click. Short answers.</div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">02</span><svg class="i"><use href="#i-link"/></svg><h3>Inspire</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill">paste the URL of a site you love</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Board → Inspiration. The next questions come pre-filled from it.</div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">03</span><svg class="i"><use href="#i-pen"/></svg><h3>Design</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill strong">design it</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Figma. Claude drafts the frames — it's a draft.</div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">04</span><svg class="i"><use href="#i-sliders"/></svg><h3>Refine</h3></div>
+        <div class="row"><svg class="i"><use href="#i-frame"/></svg><div>In Figma, your way. Change what you'd change for a client. Don't rebuild.</div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Your Figma. From here on, the code matches <em>your</em> frame.</div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">05</span><svg class="i"><use href="#i-import"/></svg><h3>Import</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill strong">import</span><span class="or">+</span><span class="pill">frames as PNG → brief/figma/</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Board → tokens as swatches, sections listed.</div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">06</span><svg class="i"><use href="#i-build"/></svg><h3>Build</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill strong">next</span><span class="or">one section at a time</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Preview + Board → your frame next to 3 screenshots. Say what's off.</div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">07</span><svg class="i"><use href="#i-motion"/></svg><h3>Animate</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill strong">animate</span><span class="or">→ untick what you don't want</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Scroll the preview. <span class="pill">too fast</span> <span class="pill">too much</span> <span class="pill">hold longer</span></div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">08</span><svg class="i"><use href="#i-check"/></svg><h3>Review</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill strong">review</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-eye"/></svg><div>Board → Review. It fixes most; asks the rest with options.</div></div>
+      </button>
+
+      <button class="step" type="button" aria-pressed="false">
+        <span class="tag here">you are here</span><span class="tag next">next</span>
+        <div class="top"><span class="n">09</span><svg class="i"><use href="#i-ship"/></svg><h3>Ship</h3></div>
+        <div class="row"><svg class="i"><use href="#i-say"/></svg><div class="pills"><span class="pill strong">ship</span><span class="or">→ link</span><span class="pill strong">go live</span><span class="or">→ real URL</span></div></div>
+        <div class="row"><svg class="i"><use href="#i-phone"/></svg><div>Your phone. First time: a login opens in the browser — log in, come back, say <span class="pill">done</span>.</div></div>
+      </button>
+
+    </div>
+    <p class="hint">Tap a step to mark where you are. It stays marked in this browser. Lost? <span class="pill">/help</span></p>
+  </section>
+
+  <section id="words">
+    <div class="sh"><h2>Your words</h2><span class="eyebrow">say it, don't explain it</span></div>
+    <div class="words">
+      <div class="word"><span class="pill strong">next</span><small>build the next section</small></div>
+      <div class="word"><span class="pill strong">this looks wrong</span><small>then say what, in your words</small></div>
+      <div class="word"><span class="pill strong">undo</span><small>back to the last good save point</small></div>
+      <div class="word"><span class="pill strong">status?</span><small>where are we, what's next</small></div>
+      <div class="word"><span class="pill strong">something's wrong</span><small>any error. Don't read it.</small></div>
+      <div class="word"><span class="pill strong">this looks generic</span><small>it knows what to change</small></div>
+      <div class="word"><span class="pill strong">done</span><small>after any login</small></div>
+      <div class="word"><span class="pill strong">I don't know — pick the standard option</span><small>always allowed</small></div>
+    </div>
+  </section>
+
+  <section id="stuck">
+    <div class="sh"><h2>Stuck?</h2><span class="eyebrow">describe · never diagnose</span></div>
+    <div class="stuck">
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-window"/></svg>Blank page</div><span class="pill strong">blank page</span></div>
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-alert"/></svg>Error text in the chat</div><span class="pill strong">something's wrong</span><small>Don't read it. If asked, one line: what you were doing.</small></div>
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-mismatch"/></svg>Doesn't match my Figma</div><span class="pill strong">the heading is too small and breaks into three lines</span><small>What's different, your words.</small></div>
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-swap"/></svg>It changed something I didn't ask</div><span class="pill strong">you changed X — put it back</span><small>More than one thing? <b>undo</b>.</small></div>
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-question"/></svg>A technical question</div><span class="pill strong">I don't know — choose the standard option, tell me in one line</span></div>
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-key"/></svg>It asks me to log in</div><span class="pill strong">done</span><small>Normal the first time. Browser opens → your own account → back.</small></div>
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-clock"/></svg>Taking a long time</div><span class="pill strong">status?</span><small>Builds and screenshots take a minute. Three minutes of silence → ask.</small></div>
+      <div class="tile"><div class="sit"><svg class="i"><use href="#i-coffee"/></svg>Out of patience</div><span class="pill strong">I'm stuck — save everything and tell me where we are</span><small>Then a break. It'll be there.</small></div>
+    </div>
+  </section>
+
+  <section id="roles">
+    <div class="two">
+      <div>
+        <div class="sh"><h2>Never</h2></div>
+        <ul class="list never">
+          <li><svg class="i"><use href="#i-no"/></svg>The terminal</li>
+          <li><svg class="i"><use href="#i-no"/></svg>Read code, errors or diffs</li>
+          <li><svg class="i"><use href="#i-no"/></svg>Git, branches, merges — Claude decides</li>
+          <li><svg class="i"><use href="#i-no"/></svg>Type a paragraph when an option will do</li>
+          <li><svg class="i"><use href="#i-no"/></svg>Trust “done” without looking at the preview</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sh"><h2>Only you</h2></div>
+        <ul class="list you">
+          <li><svg class="i"><use href="#i-you"/></svg>Decide the design</li>
+          <li><svg class="i"><use href="#i-you"/></svg>Refine the Figma draft</li>
+          <li><svg class="i"><use href="#i-you"/></svg>Export frames and assets from Figma</li>
+          <li><svg class="i"><use href="#i-you"/></svg>Log in — Figma, GitHub, Vercel — with your own account</li>
+          <li><svg class="i"><use href="#i-you"/></svg>Judge whether it <em>feels</em> right</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="foot">
+      <div class="fr"><svg class="i"><use href="#i-folder"/></svg><code>brief/figma/</code> your frames as PNG</div>
+      <div class="fr"><svg class="i"><use href="#i-folder"/></svg><code>src/assets/</code> images and logos from Figma</div>
+      <div class="fr"><svg class="i"><use href="#i-folder"/></svg><code>public/video/</code> videos</div>
+      <div class="fr"><svg class="i"><use href="#i-book"/></svg><a href="HANDBOOK.html">HANDBOOK.html</a> — the ten ideas, the glossary</div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // "You are here": one step marked per browser; the following step shows "next".
+  (function () {
+    var KEY = 'aistudios-guide-here';
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+    function read() { try { var v = localStorage.getItem(KEY); return v === null ? -1 : parseInt(v, 10); } catch (e) { return -1; } }
+    function write(i) { try { if (i < 0) localStorage.removeItem(KEY); else localStorage.setItem(KEY, String(i)); } catch (e) {} }
+    function paint(i) {
+      steps.forEach(function (el, k) {
+        el.classList.toggle('here', k === i);
+        el.classList.toggle('next', i >= 0 && k === i + 1);
+        el.setAttribute('aria-pressed', k === i ? 'true' : 'false');
+      });
+    }
+    steps.forEach(function (el, k) {
+      el.addEventListener('click', function () { var cur = read(); var n = cur === k ? -1 : k; write(n); paint(n); });
+    });
+    paint(read());
+  })();
+</script>
+
+</body>
+</html>

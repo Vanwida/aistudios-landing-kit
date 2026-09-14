@@ -48,6 +48,10 @@ Everything else is Claude's.
 
 Node.js 22 (nodejs.org → LTS) · Git (macOS installs it on first use) · GitHub CLI (cli.github.com) · Chrome · accounts: Claude with Claude Code, GitHub, Vercel, Figma.
 
+## Keep this open
+
+**`GUIDE.html`** — double-click it and leave the tab open while you work: the loop, your words, what to say when stuck.
+
 ## Read this next
 
 **`HANDBOOK.html`** — double-click it. The ten ideas behind how websites work, in Figma terms; what to say when you're stuck; a glossary.
