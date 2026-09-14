@@ -8,7 +8,7 @@
 // `system` in kit.json is replaced with the remote copy (`git checkout kit/<branch> -- <path>`).
 // Nothing else is touched. Paths under `keep` are restored afterwards. A save point (commit) is
 // made before and after, so `/undo` can always go back. The first line of output is machine
-// readable: RESULT: UPDATED | UP_TO_DATE | NO_ACCESS | NOT_A_REPO | ERROR.
+// readable: RESULT: UPDATED | UP_TO_DATE | UPDATE_AVAILABLE | NO_ACCESS | NETWORK | NOT_A_REPO.
 
 import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
@@ -41,10 +41,26 @@ const ref = `kit/${local.branch}`;
 if (tryGit('remote', 'get-url', 'kit') === null) git('remote', 'add', 'kit', remoteUrl);
 else if (git('remote', 'get-url', 'kit') !== remoteUrl) git('remote', 'set-url', 'kit', remoteUrl);
 
-try {
-  execFileSync('git', ['fetch', '--quiet', 'kit', local.branch], { stdio: ['ignore', 'ignore', 'pipe'], env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } });
-} catch {
-  fail('NO_ACCESS', `Could not reach the kit at ${remoteUrl}. Your GitHub account needs access to it — ask AISTUDIOS, then try again.`, 3);
+// Fetch with retries: classroom Wi-Fi drops connections. Only a real permission error is NO_ACCESS.
+const ACCESS_ERROR = /Authentication failed|could not read Username|Repository not found|Permission denied|Invalid username|403/i;
+const FETCH_TRIES = 3;
+const RETRY_PAUSE_MS = 2000;
+function pause(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms); }
+let fetchError = '';
+for (let attempt = 1; attempt <= FETCH_TRIES; attempt++) {
+  try {
+    execFileSync('git', ['fetch', '--quiet', 'kit', local.branch], { stdio: ['ignore', 'ignore', 'pipe'], env: { ...process.env, GIT_TERMINAL_PROMPT: '0' } });
+    fetchError = '';
+    break;
+  } catch (e) {
+    fetchError = String(e.stderr || e.message || 'fetch failed');
+    if (ACCESS_ERROR.test(fetchError) || attempt === FETCH_TRIES) break;
+    pause(RETRY_PAUSE_MS);
+  }
+}
+if (fetchError) {
+  if (ACCESS_ERROR.test(fetchError)) fail('NO_ACCESS', `The kit at ${remoteUrl} didn't let us in. Your GitHub account needs access to it — ask AISTUDIOS, then try again.`, 3);
+  fail('NETWORK', 'Could not reach GitHub right now. Check the connection and try again in a minute. Nothing was changed.', 4);
 }
 
 const remote = JSON.parse(git('show', `${ref}:kit.json`));
