@@ -73,14 +73,14 @@ Some agencies don't have GitHub yet. Then: `npx vercel login` → `npx vercel --
 
 ## Environment variables
 
-Static landings usually have none. If a form endpoint or analytics ID must stay out of the code: `npx vercel env add PUBLIC_FORM_ENDPOINT production` (and preview), and read it in Astro via `import.meta.env.PUBLIC_FORM_ENDPOINT`. Keep a local copy in `.env` (never committed).
+Static landings usually have none. If a form endpoint or analytics ID must stay out of the code: `npx vercel env add PUBLIC_FORM_ENDPOINT production preview`, and read it in Astro via `import.meta.env.PUBLIC_FORM_ENDPOINT`. For the local preview the designer can keep the same line in `.env` (git-ignored) — you never read or write that file.
 
 ## Failure modes → fixes
 
 | Symptom | Cause | Fix |
 |---|---|---|
 | `vercel login` prints a URL but nothing happens | headless shell can't open the browser | tell the designer to open the printed URL themselves; or `npx vercel login --github` |
-| Login impossible on this machine | corporate restrictions | designer creates a token at vercel.com/account/tokens, saves it in `.env` as `VERCEL_TOKEN=…`; deploy with `npx vercel --prod --yes --token "$VERCEL_TOKEN"` (read from `.env`, never pasted in chat) |
+| Login impossible on this machine | corporate restrictions | designer creates a token at vercel.com/account/tokens and pastes `VERCEL_TOKEN=…` into `.env` themselves; deploy with `set -a; . ./.env; set +a; npx vercel --prod --yes` — the shell reads the token, you never see it, and it never appears in chat |
 | Build passes locally, fails on Vercel: "cannot find module ./Hero.astro" | file name case (macOS is case-insensitive, Linux isn't) | rename to match the import exactly; commit; push |
 | Fonts/images missing live | referenced with a wrong path (`src/assets` used as a URL) | import through `astro:assets`, or move to `public/` and use `/file.ext` |
 | "Error: No existing credentials found" | `.vercel` folder missing / other machine | `npx vercel link --yes` again |

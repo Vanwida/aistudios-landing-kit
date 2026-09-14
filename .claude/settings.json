@@ -91,7 +91,15 @@
       "Read(.env)",
       "Read(.env.*)",
       "Edit(.env)",
-      "Edit(.claude/settings.json)"
+      "Edit(.claude/settings.json)",
+      "Edit(.env.*)",
+      "Write(.env)",
+      "Write(.env.*)",
+      "Bash(git add -f*)",
+      "Bash(git add --force*)",
+      "Bash(cat .env*)",
+      "Bash(echo * > .env*)",
+      "Bash(echo * >> .env*)"
     ]
   }
 }

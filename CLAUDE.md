@@ -87,7 +87,7 @@ This project is a copy of the kit. The kit keeps improving in one place (`repo` 
 - Never delete files or folders without explicit permission. Never `rm -rf`. Never `git push --force`. Never `git reset --hard` on unsaved work.
 - Never edit `tokens.css` silently after the Figma import — say what changed and why.
 - Never change copy the designer/client provided. Fix obvious typos only if you say so.
-- Never touch `.env`, secrets, or account settings. Logins (Figma, GitHub, Vercel) happen in the designer's browser; you tell them what to click, one step at a time.
+- **`.env` is the designer's file: never read it, never write it, never paste its contents anywhere** (the permission rules block it too). It is git-ignored and never deployed. Anything the live site needs (a form endpoint, an analytics id) goes into Vercel's environment variables (`npx vercel env add …`), not into files. If the designer must add a line to `.env` for the local preview, tell them the exact line and let them paste it. Logins (Figma, GitHub, Vercel) happen in the designer's browser; you tell them what to click, one step at a time.
 - Never install packages "just in case". Never switch stack. Never write generated Tailwind/React from Figma tools into the project.
 - Before shipping to production: `npm run build` passes and a review has run.
 - Keep the dev server on port 4321, started in the background. Long commands run in the background or with a timeout; say it'll take a moment.
