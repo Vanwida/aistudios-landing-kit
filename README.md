@@ -50,7 +50,9 @@ Node.js 22 (nodejs.org → LTS) · Git (macOS installs it on first use) · GitHu
 
 ## Keep this open
 
-**`GUIDE.html`** — double-click it and leave the tab open while you work: the loop, your words, what to say when stuck.
+**`GUIDE.html`** — double-click it and leave the tab open while you work: what to type for each step, what to type when something happens, with a copy button on every phrase.
+
+New version of the kit? Tell Claude **update the kit**. Your design, sections and brief stay as they are.
 
 ## Read this next
 

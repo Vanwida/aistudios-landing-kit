@@ -38,6 +38,7 @@ The designer **talks**; you map what they say to a phase and run its skill. Slas
 | "undo", "go back", "it was better before" | `undo` | Back to a save point (never loses anything). | — |
 | "where were we", "status" | `status` | Five lines: built, next, open items, links. | — |
 | "handoff", "document it for the client" | `handoff` | Client-facing page (HTML/PDF), never markdown. | `brief/HANDOFF.md` → `brief/handoff.html` |
+| "update the kit", "new version of the kit", "is the kit up to date" | `update` | Replaces the system files with the current version from the AISTUDIOS kit repo; project files untouched; save point first. | the paths listed in `kit.json` |
 
 **Order of phases:** brief → inspiration → design (Figma draft, refined by the designer) → import from Figma → build → animate → review → ship. If the designer already has a finished Figma, skip `inspire` and `design`.
 
@@ -60,6 +61,13 @@ The designer **talks**; you map what they say to a phase and run its skill. Slas
 - No new dependencies without saying, in one sentence, what it's for and getting a yes. Never React, Next, Tailwind, jQuery, Bootstrap, Framer Motion.
 
 Detailed conventions live in the `astro-conventions` skill; read it before writing any section.
+
+## System files vs project files
+
+This project is a copy of the kit. The kit keeps improving in one place (`repo` in `kit.json`), and `update` brings the current version in. Two kinds of files:
+
+- **System files** — owned by the kit, replaced on update: the paths under `system` in `kit.json` (this manual, `.claude/`, `scripts/`, `templates/`, `docs/`, the board, `motion.js`, `reset.css`, `_Example.astro`, the guides). Never edit these to solve a project problem — the change would vanish at the next update. If a project needs different behaviour, do it in a project file and note it in `brief/PROJECT.md`.
+- **Project files** — the designer's, never touched by an update: `src/sections/`, `src/styles/tokens.css` and `global.css`, `src/pages/`, `src/layouts/`, `src/components/`, `src/assets/`, `public/`, `brief/`, `package.json`, `astro.config.mjs`.
 
 ## Quality bar (definition of done for a section)
 

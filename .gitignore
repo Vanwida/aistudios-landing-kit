@@ -16,6 +16,9 @@ node_modules/
 # screenshots are regenerated on demand
 brief/shots/*.png
 
+# claude code, per machine
+.claude/settings.local.json
+
 # os / editor
 .DS_Store
 Thumbs.db

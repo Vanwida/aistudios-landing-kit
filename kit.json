@@ -1,0 +1,26 @@
+{
+  "name": "AISTUDIOS Landing Kit",
+  "version": "1.0.0",
+  "repo": "Vanwida/aistudios-landing-kit",
+  "branch": "main",
+  "system": [
+    "kit.json",
+    "CLAUDE.md",
+    "README.md",
+    "HANDBOOK.html",
+    "GUIDE.html",
+    ".mcp.json",
+    ".claude",
+    "docs",
+    "scripts",
+    "templates",
+    "src/board",
+    "src/scripts/motion.js",
+    "src/styles/reset.css",
+    "src/sections/_Example.astro",
+    "src/assets/placeholder.svg"
+  ],
+  "keep": [
+    ".claude/settings.local.json"
+  ]
+}
