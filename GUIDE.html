@@ -133,6 +133,11 @@
         <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
         <thead><tr><th>You want to…</th><th>Type this</th><th>What happens</th></tr></thead>
         <tbody>
+          <tr data-keywords="new client project fresh copy download github template kit folder">
+            <td class="want" data-label="You want to">Start a new client — get the current kit</td>
+            <td data-label="Type this"><div class="cmds"><span class="plain">Make an empty folder named after the client, open it in Claude Code, then:</span><div class="cmd"><code>Create a new landing from the AISTUDIOS kit: Vanwida/aistudios-landing-kit</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Create a new landing from the AISTUDIOS kit: Vanwida/aistudios-landing-kit"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td class="then" data-label="What happens">Claude downloads the latest kit into the folder and creates the project on GitHub (first time: a GitHub login in the browser). Then <b>start a new conversation</b> and type <code>/start</code>.</td>
+          </tr>
           <tr data-keywords="begin new landing brief questionnaire">
             <td class="want" data-label="You want to">Start a new project</td>
             <td data-label="Type this"><div class="cmds"><div class="cmd"><code>/start</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="/start"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">then choose “New landing page from a brief”</span></div></div></td>
@@ -140,12 +145,12 @@
           </tr>
           <tr data-keywords="inspiration reference url link website example">
             <td class="want" data-label="You want to">Use a site you love as the reference</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>https://www.lassie.ai/</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="https://www.lassie.ai/"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">paste any address, and say what you like about it</span></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Use this site as the reference for how it&#x27;s built and how it feels — not its brand or copy: https://www.lassie.ai/ — what I like: the hero video with the headline, the pinned story where the card grows, the footer curtain.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Use this site as the reference for how it&#x27;s built and how it feels — not its brand or copy: https://www.lassie.ai/ — what I like: the hero video with the headline, the pinned story where the card grows, the footer curtain."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">change the address and the three things you like</span></div></div></td>
             <td class="then" data-label="What happens">Claude studies its layout, type, colour and motion. The site questions come pre-filled from it.</td>
           </tr>
           <tr data-keywords="draft figma design">
             <td class="want" data-label="You want to">Get a first design in Figma</td>
-            <td data-label="Type this"><div class="cmds"><span class="plain">Nothing — it starts by itself after the setup. To redo it:</span><div class="cmd"><code>design it</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="design it"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><span class="plain">Nothing — it starts by itself after the setup. To redo it:</span><div class="cmd"><code>Redo the Figma draft from the brief. Keep the same sections; make it feel closer to the reference and less generic.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Redo the Figma draft from the brief. Keep the same sections; make it feel closer to the reference and less generic."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Right after the setup, Claude asks where to draw (a new empty Figma file, or one you paste), then drafts the site — frames, colours, type, real copy. Open Figma. <b>It's a draft.</b></td>
           </tr>
           <tr data-keywords="refine figma export png frames">
@@ -155,57 +160,57 @@
           </tr>
           <tr data-keywords="import figma tokens colours colors fonts">
             <td class="want" data-label="You want to">Bring your Figma into the kit</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>import</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="import"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Import my refined Figma into the kit — read the colours, fonts, spacing and the list of sections from it, and show them on the board.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Import my refined Figma into the kit — read the colours, fonts, spacing and the list of sections from it, and show them on the board."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Colours, fonts, spacing and the list of sections are read from your Figma and PNGs. Check them on the board.</td>
           </tr>
           <tr data-keywords="build hero section">
             <td class="want" data-label="You want to">Build the next section</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>next</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="next"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Build the next section from my Figma frame, then show me the screenshots next to the frame on the board.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Build the next section from my Figma frame, then show me the screenshots next to the frame on the board."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">One section is built. On the board: screenshots next to your frame — desktop, tablet, phone. <b>Look.</b></td>
           </tr>
           <tr data-keywords="fix wrong change adjust">
             <td class="want" data-label="You want to">Fix something that's off</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>the title is too small</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="the title is too small"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>more space above the photo</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="more space above the photo"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">say exactly what you see, in your words</span></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>The title is too small — match the size in my Figma frame.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="The title is too small — match the size in my Figma frame."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>More space above the photo, like in the frame.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="More space above the photo, like in the frame."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">say exactly what you see, in your words</span></div></div></td>
             <td class="then" data-label="What happens">Claude fixes it and shows new screenshots. When it matches, type <code>next</code>.</td>
           </tr>
           <tr data-keywords="animate animation motion effects parallax reveal">
             <td class="want" data-label="You want to">Add motion</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>animate</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="animate"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Animate the page with the feel of the reference — propose the motion as a list of options first, so I can untick what I don&#x27;t want.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Animate the page with the feel of the reference — propose the motion as a list of options first, so I can untick what I don&#x27;t want."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">A list of effects as options — reveals, parallax, the pinned section. Untick what you don't want. Then scroll the preview.</td>
           </tr>
           <tr data-keywords="animation motion speed slower faster less more">
             <td class="want" data-label="You want to">Adjust the motion</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>slower</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="slower"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>less</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="less"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>hold it longer</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="hold it longer"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Make the motion slower and calmer across the page: fewer things moving at once, smaller distances, hold each reveal a bit longer. Then take new scroll screenshots for the board.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Make the motion slower and calmer across the page: fewer things moving at once, smaller distances, hold each reveal a bit longer. Then take new scroll screenshots for the board."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>That&#x27;s too much — remove the effects that don&#x27;t help reading. Keep only the hero and the pinned story.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="That&#x27;s too much — remove the effects that don&#x27;t help reading. Keep only the hero and the pinned story."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>Hold the pinned section longer before it releases.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Hold the pinned section longer before it releases."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Claude adjusts and takes new scroll screenshots for the board.</td>
           </tr>
           <tr data-keywords="review qa check mobile accessibility">
             <td class="want" data-label="You want to">Check everything before sending</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>review</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="review"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Review the whole page before it goes out: phone, tablet, accessibility, speed and links. Fix what you can and ask me the rest with options.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Review the whole page before it goes out: phone, tablet, accessibility, speed and links. Fix what you can and ask me the rest with options."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Phone, tablet, accessibility, speed, links. Claude fixes what it can and asks the rest with options.</td>
           </tr>
           <tr data-keywords="ship publish deploy vercel login link url preview">
             <td class="want" data-label="You want to">Put it online with a link to share</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>ship</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="ship"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Ship it — save everything, put the page online and give me the link to share.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Ship it — save everything, put the page online and give me the link to share."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">You get a preview link. <b>First time:</b> the browser asks you to log in to Vercel — use your own account — then type <code>done</code>.</td>
           </tr>
           <tr data-keywords="go live production publish domain">
             <td class="want" data-label="You want to">Publish to the real address</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>go live</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="go live"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Go live — publish the approved version to the real address.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Go live — publish the approved version to the real address."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">The page goes live. Claude handles everything underneath.</td>
           </tr>
           <tr data-keywords="help status lost where">
             <td class="want" data-label="You want to">Know where you are</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>/help</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="/help"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>status?</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="status?"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>/help</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="/help"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>Where are we? Tell me what&#x27;s built, what&#x27;s next and what to say to continue.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Where are we? Tell me what&#x27;s built, what&#x27;s next and what to say to continue."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">What's built, what's next, and what to say to continue.</td>
           </tr>
           <tr data-keywords="undo revert back save point version">
             <td class="want" data-label="You want to">Go back to how it was before</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>undo</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="undo"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Undo — take the project back to the last save point and tell me what changed.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Undo — take the project back to the last save point and tell me what changed."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Back to the last save point. Nothing is ever lost — the save points are on the board.</td>
           </tr>
           <tr data-keywords="update upgrade latest version new kit system aistudios">
             <td class="want" data-label="You want to">Get the latest version of the kit</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>update the kit</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="update the kit"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Update the kit to the current version from AISTUDIOS. Keep my design, sections and brief exactly as they are.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Update the kit to the current version from AISTUDIOS. Keep my design, sections and brief exactly as they are."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Claude fetches AISTUDIOS's current version of the system and installs it. Your design, sections and brief are untouched. A save point is made first, so <code>undo</code> works.</td>
           </tr>
         </tbody>
@@ -222,32 +227,32 @@
         <tbody>
           <tr data-keywords="blank white empty localhost preview broken">
             <td class="want" data-label="What you see">The preview is blank or won't load</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>the preview is blank</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="the preview is blank"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>The preview is blank — check it and restart it.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="The preview is blank — check it and restart it."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Claude checks the preview and restarts it.</td>
           </tr>
           <tr data-keywords="error red broken crash">
             <td class="want" data-label="What you see">An error appears in the chat</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>something's wrong</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="something's wrong"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Something&#x27;s wrong — there&#x27;s an error in the chat. Fix it and tell me in one line what happened.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Something&#x27;s wrong — there&#x27;s an error in the chat. Fix it and tell me in one line what happened."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">You don't need to read the error. If Claude asks what you were doing, one line is enough.</td>
           </tr>
           <tr data-keywords="figma match different mismatch design">
             <td class="want" data-label="What you see">It doesn't look like my Figma</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>the heading breaks into three lines</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="the heading breaks into three lines"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">say what's different, the way you'd tell a junior</span></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>This doesn&#x27;t match my Figma: the heading breaks into three lines. Compare with my frame and fix it.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="This doesn&#x27;t match my Figma: the heading breaks into three lines. Compare with my frame and fix it."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">say what's different, the way you'd tell a junior</span></div></div></td>
             <td class="then" data-label="What happens">Claude compares against your frame and fixes it.</td>
           </tr>
           <tr data-keywords="changed undo revert put back">
             <td class="want" data-label="What you see">It changed something I didn't ask for</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>you changed the footer — put it back</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="you changed the footer — put it back"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>undo</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="undo"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">if it's more than one thing</span></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>You changed the footer and I didn&#x27;t ask — put it back exactly as it was.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="You changed the footer and I didn&#x27;t ask — put it back exactly as it was."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div><div class="cmd"><code>Undo — back to the last save point.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Undo — back to the last save point."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button><span class="note">if it's more than one thing</span></div></div></td>
             <td class="then" data-label="What happens">It's put back. <code>undo</code> returns to the last save point.</td>
           </tr>
           <tr data-keywords="question technical option standard">
             <td class="want" data-label="What you see">A technical question I don't understand</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>I don't know — choose the standard option and tell me in one line</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="I don't know — choose the standard option and tell me in one line"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>I don&#x27;t know — choose the standard option and tell me in one line what you chose.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="I don&#x27;t know — choose the standard option and tell me in one line what you chose."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Always allowed. Claude picks the safe option and explains in one line.</td>
           </tr>
           <tr data-keywords="login log in password account github vercel figma browser sign in">
             <td class="want" data-label="What you see">It asks me to log in somewhere</td>
-            <td data-label="Type this"><div class="cmds"><span class="plain">Log in in the browser with your own account, come back, then:</span><div class="cmd"><code>done</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="done"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><span class="plain">Log in in the browser with your own account, come back, then:</span><div class="cmd"><code>Done — I&#x27;ve logged in. Continue.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Done — I&#x27;ve logged in. Continue."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Normal the first time — GitHub, Vercel, Figma. Claude continues where it stopped.</td>
           </tr>
           <tr data-keywords="key token setting settings env form vercel paste value board">
@@ -257,12 +262,12 @@
           </tr>
           <tr data-keywords="slow waiting silent stuck hanging status">
             <td class="want" data-label="What you see">It's been silent for a while</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>status?</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="status?"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>Status? What are you doing right now, and how long will it take?</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="Status? What are you doing right now, and how long will it take?"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Building and screenshots take up to a minute. After three minutes of silence, ask.</td>
           </tr>
           <tr data-keywords="lost stuck help save break">
             <td class="want" data-label="What you see">I'm lost, or out of patience</td>
-            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>save everything and tell me where we are</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="save everything and tell me where we are"><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>I&#x27;m stuck. Save everything, tell me where we are in plain words, and what to say next.</code><button class="copy" type="button" aria-label="Copy" title="Copy" data-copy="I&#x27;m stuck. Save everything, tell me where we are in plain words, and what to say next."><svg class="ic"><use href="#ic-copy"/></svg><svg class="ic ok"><use href="#ic-check"/></svg></button></div></div></td>
             <td class="then" data-label="What happens">Everything is saved. Take a break. Come back with <code>/help</code>.</td>
           </tr>
         </tbody>

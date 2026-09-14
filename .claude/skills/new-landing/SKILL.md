@@ -69,8 +69,8 @@ The agency always works on GitHub. Do it here, one browser step, narrated one li
 
 1. `gh --version`. Missing → if Homebrew exists: `brew install gh` (say: "Installing a small helper for GitHub, one minute."). No Homebrew → "One install only you can do: download GitHub CLI from cli.github.com and run the installer, then tell me *done*." Wait.
 2. `gh auth status`. Not logged in → say **before** running it: "A browser window will open with a one-time code. Log into GitHub and click **Authorise** — that connects your account. Tell me when it's done." Then `gh auth login --web --git-protocol https`. Confirm with `gh auth status`.
-3. Ask once (options): "Where should the project live on GitHub?" Your own account *(recommended)* / The agency's organisation (I'll ask its name). Remember the answer in `brief/PROJECT.md`.
-4. `gh repo create <agency-or-user>/<client>-landing --private --source=. --remote=origin --push` then `git push -u origin draft`.
+3. Skip this question if `origin` already exists. Otherwise ask once (options): "Where should the project live on GitHub?" Your own account *(recommended)* / The agency's organisation (I'll ask its name). Remember the answer in `brief/PROJECT.md`.
+4. If `git remote get-url origin` already works, the project was created from the kit template and its repo exists — skip creation, just `git push -u origin main && git push -u origin draft`. Otherwise: `gh repo create <agency-or-user>/<client>-landing --private --source=. --remote=origin --push` then `git push -u origin draft`.
 5. Say: "The project is also saved online on GitHub — that's the agency's copy, with full history. You never need to open it."
 
 If GitHub truly can't be done now (no account, IT block): say so in one line, write it under Open items in `brief/PROJECT.md`, and continue. `ship` will pick it up. That's the only acceptable skip — and it's never silent.

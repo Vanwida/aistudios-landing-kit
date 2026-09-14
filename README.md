@@ -5,9 +5,24 @@ For designers. No terminal, no git, no code.
 
 ## Start (five minutes)
 
-1. **Copy this folder** and rename the copy after the client: `acme-landing`. Never work inside the original kit.
-2. Open the **Claude** desktop app → **Code** → *Open folder* → choose `acme-landing`. Set the permission mode to **Auto**.
-3. Type **`/start`** and pick where you want to begin. Then just talk.
+1. Make an **empty folder** named after the client — `acme-landing` — and open it in the **Claude** desktop app → **Code** → *Open folder*. Set the permission mode to **Auto**.
+2. Paste: **`Create a new landing from the AISTUDIOS kit: Vanwida/aistudios-landing-kit`**. Claude downloads the current kit into the folder and creates the project on GitHub (the first time, a GitHub login opens in your browser).
+3. **Start a new conversation**, type **`/start`** and pick where you want to begin. Then just talk.
+
+(Got the kit as a zip instead? Unzip it, rename the folder after the client, open it, type `/start`. Same thing — say **update the kit** later to get the current version.)
+
+### For Claude — creating a project from this template
+
+You are in an empty folder and the designer pasted the sentence above. Do this, narrating one line at a time, never the commands:
+
+1. `gh auth status` — if not logged in, say a browser window will open, then `gh auth login --web --git-protocol https`.
+2. Repo name = the folder name (lowercase, hyphens). Ask once, with options, where it should live: their own account *(recommended)* / the agency's organisation (ask its name).
+3. `gh repo create <owner>/<name> --template Vanwida/aistudios-landing-kit --private`
+4. GitHub copies the template in the background: poll `gh api repos/<owner>/<name>/contents/kit.json` every 2 s until it answers (up to 60 s).
+5. `git clone https://github.com/<owner>/<name>.git .` (into this folder). Then `git checkout -b draft`.
+6. Say: "The kit is in. **Start a new conversation** so I can load it, then type **/start**." Stop.
+
+If `gh repo create` fails with a permission error, the designer's GitHub account has no access to the kit: "Ask AISTUDIOS to give your GitHub account access to the kit, then paste the sentence again." 
 
 Two places to look while you work:
 
