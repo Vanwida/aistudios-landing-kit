@@ -1,0 +1,41 @@
+{
+  "client": "Client name",
+  "sections": [
+    {
+      "id": "header",
+      "name": "Header",
+      "file": "Header.astro",
+      "figma": { "desktop": null, "mobile": null },
+      "built": false,
+      "inProgress": false,
+      "motion": null,
+      "notes": "Floating pill nav, condenses on scroll.",
+      "todos": []
+    },
+    {
+      "id": "hero",
+      "name": "Hero",
+      "file": "Hero.astro",
+      "figma": { "desktop": null, "mobile": null },
+      "built": false,
+      "inProgress": false,
+      "motion": null,
+      "notes": "",
+      "todos": []
+    },
+    {
+      "id": "footer",
+      "name": "Footer",
+      "file": "Footer.astro",
+      "figma": { "desktop": null, "mobile": null },
+      "built": false,
+      "inProgress": false,
+      "motion": null,
+      "notes": "",
+      "todos": []
+    }
+  ],
+  "log": [
+    { "date": "YYYY-MM-DD", "text": "project started" }
+  ]
+}

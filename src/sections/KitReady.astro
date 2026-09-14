@@ -1,0 +1,63 @@
+---
+/* Placeholder shown before the first section is built. /build removes it. */
+import Container from '../components/Container.astro';
+---
+
+<section id="kit-ready" class="section kit-ready" aria-labelledby="kit-ready-title">
+  <Container size="narrow">
+    <p class="eyebrow" data-reveal>AISTUDIOS Landing Kit</p>
+    <h1 id="kit-ready-title" data-reveal data-reveal-delay="0.1">The kit is running.</h1>
+    <p class="lede" data-reveal data-reveal-delay="0.2">
+      This page is a blank canvas. Go back to Claude and type <code>/new-landing</code> to start the brief,
+      then <code>/figma</code> to bring in the design, then <code>/build</code> one section at a time.
+    </p>
+    <ul class="kit-ready__steps" role="list" data-reveal-group>
+      <li><span>1</span> /new-landing — the brief</li>
+      <li><span>2</span> /figma — tokens and sections from Figma</li>
+      <li><span>3</span> /build — one section at a time, with screenshots</li>
+      <li><span>4</span> /animate — motion, from subtle to showcase</li>
+      <li><span>5</span> /review — quality checks</li>
+      <li><span>6</span> /ship — live on the internet</li>
+    </ul>
+  </Container>
+</section>
+
+<style>
+  .kit-ready {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+  }
+  .kit-ready .eyebrow { margin-bottom: var(--space-4); }
+  .kit-ready h1 { margin-bottom: var(--space-5); }
+  .kit-ready code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--color-bg-alt);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+  .kit-ready__steps {
+    margin-top: var(--space-7);
+    display: grid;
+    gap: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+  .kit-ready__steps li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .kit-ready__steps span {
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text);
+  }
+</style>

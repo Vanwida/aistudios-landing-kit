@@ -1,0 +1,21 @@
+---
+/*
+  index.astro — THE PAGE
+  ---------------------------------------------------------------
+  The page is just a list of sections in order. /build adds one import
+  and one tag per section, in the order defined in brief/SECTIONS.md.
+  Keep this file boring: no styles, no logic, just the section list.
+*/
+import Base from '../layouts/Base.astro';
+import KitReady from '../sections/KitReady.astro';
+
+// SECTIONS — /build replaces the KitReady placeholder with the real sections:
+// import Header from '../sections/Header.astro';
+// import Hero from '../sections/Hero.astro';
+// ...
+// import Footer from '../sections/Footer.astro';
+---
+
+<Base title="Landing Kit — ready" description="A new landing page built with the AISTUDIOS Landing Kit." noindex>
+  <KitReady />
+</Base>

@@ -1,0 +1,199 @@
+---
+/*
+  PROJECT BOARD — the designer's view of the project. Preview only (never built).
+  Everything shown here is generated from brief/, src/styles/tokens.css and git.
+*/
+import { loadBrief } from './brief-data.mjs';
+const b = loadBrief();
+const title = b.client ? `${b.client} — board` : 'Project board';
+const statusWord = (s) => (s.built ? (s.motion ? 'built · motion' : 'built') : s.inProgress ? 'building' : 'not yet');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" />
+    <style>
+      :root { --bg:#f6f6f2; --raised:#fbfbf8; --ink:#17191b; --ink2:#5a5f5c; --ink3:#8b918d; --line:#dcdfd9; --accent:#1f6f5f; --accent-soft:#e2efe9; --warn:#9a3d24; --warn-soft:#f5e4de;
+        --display:'Instrument Serif', Georgia, serif; --body:'DM Sans', system-ui, sans-serif; --mono:'DM Mono', ui-monospace, Menlo, monospace; }
+      * { box-sizing: border-box; }
+      body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--body); font-size:15px; line-height:1.55; padding: 0 clamp(16px,4vw,40px) 80px; }
+      h1,h2,h3 { font-family:var(--display); font-weight:400; margin:0; letter-spacing:-0.01em; line-height:1.05; }
+      h1 { font-size: clamp(34px,5vw,56px); } h2 { font-size: 30px; } h3 { font-size: 22px; }
+      p { margin:0; } a { color:var(--accent); }
+      code { font-family:var(--mono); font-size:.85em; background:var(--accent-soft); padding:1px 6px; border-radius:4px; }
+      .eyebrow { font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink2); }
+      .wrap { max-width:1180px; margin:0 auto; }
+      .top { padding:34px 0 22px; border-bottom:1px solid var(--line); display:flex; flex-wrap:wrap; gap:16px 40px; align-items:flex-end; justify-content:space-between; }
+      .top .meta { display:flex; flex-wrap:wrap; gap:8px 18px; font-size:13.5px; color:var(--ink2); }
+      .top .meta b { color:var(--ink); font-weight:600; }
+      .badge { font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; padding:3px 8px; border-radius:4px; background:var(--line); color:var(--ink2); }
+      .badge.on { background:var(--accent); color:#fff; }
+      .badge.warn { background:var(--warn-soft); color:var(--warn); }
+      section { padding:34px 0; border-bottom:1px solid var(--line); }
+      .sec-head { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:18px; }
+      .sec-head .eyebrow { margin-left:auto; }
+      .empty { background:var(--raised); border:1px dashed var(--line); border-radius:10px; padding:28px; text-align:center; color:var(--ink2); }
+      /* sections */
+      .card { background:var(--raised); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:14px; display:grid; gap:14px; }
+      .card header { display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 14px; }
+      .card header .n { font-family:var(--mono); font-size:12px; color:var(--ink3); }
+      .card header .id { font-family:var(--mono); font-size:12px; color:var(--ink3); }
+      .compare { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:12px; }
+      .frame { display:grid; gap:6px; }
+      .frame .lbl { font-family:var(--mono); font-size:11px; color:var(--ink3); letter-spacing:.04em; }
+      .frame .img { background:#ecece8; border:1px solid var(--line); border-radius:8px; overflow:hidden; aspect-ratio: 4/3; display:grid; place-items:start; }
+      .frame .img img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+      .frame .img.none { place-items:center; color:var(--ink3); font-size:12px; font-family:var(--mono); }
+      .frame.figma .img { border-color:var(--accent); }
+      .notes { color:var(--ink2); font-size:14px; }
+      .todos { display:flex; flex-wrap:wrap; gap:6px; }
+      .todos span { font-size:12.5px; background:var(--warn-soft); color:var(--warn); padding:3px 9px; border-radius:99px; }
+      /* tokens */
+      .swatches { display:flex; flex-wrap:wrap; gap:10px; }
+      .sw { display:grid; gap:4px; width:118px; }
+      .sw i { display:block; height:56px; border-radius:8px; border:1px solid var(--line); }
+      .sw b { font-family:var(--mono); font-size:11px; font-weight:400; color:var(--ink2); }
+      .sw small { font-family:var(--mono); font-size:10.5px; color:var(--ink3); }
+      .type-list { display:grid; gap:6px; margin-top:16px; }
+      .type-list div { display:grid; grid-template-columns: 90px 1fr; gap:14px; align-items:baseline; font-size:14px; color:var(--ink2); }
+      .type-list code { font-size:11.5px; }
+      /* prose */
+      .prose { max-width:72ch; color:var(--ink); }
+      .prose h1,.prose h2,.prose h3 { font-family:var(--body); font-weight:600; font-size:15px; margin:18px 0 6px; letter-spacing:0; }
+      .prose h1 { font-size:18px; } .prose p { margin:6px 0; } .prose ul { padding-left:1.2em; }
+      .prose table { border-collapse:collapse; font-size:13.5px; width:100%; } .prose th,.prose td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top; }
+      .prose code { white-space:normal; }
+      details { border:1px solid var(--line); border-radius:10px; background:var(--raised); padding:0 18px; margin-bottom:10px; }
+      details summary { cursor:pointer; padding:14px 0; font-weight:500; display:flex; gap:12px; align-items:baseline; }
+      details[open] summary { border-bottom:1px solid var(--line); margin-bottom:12px; }
+      details .prose { padding-bottom:16px; }
+      .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+      .grid3 img { width:100%; border:1px solid var(--line); border-radius:8px; display:block; }
+      .log { display:grid; gap:0; }
+      .log div { display:grid; grid-template-columns:110px 1fr; gap:14px; padding:8px 0; border-top:1px solid var(--line); font-size:14px; }
+      .log div:first-child { border-top:0; }
+      .log .d { font-family:var(--mono); font-size:12px; color:var(--ink3); }
+      .foot { padding-top:22px; font-size:12.5px; color:var(--ink3); font-family:var(--mono); display:flex; flex-wrap:wrap; gap:8px 18px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <div>
+          <p class="eyebrow">Project board · preview only</p>
+          <h1>{b.client || 'New landing page'}</h1>
+        </div>
+        <div class="meta">
+          <span><b>{b.counts.built}</b> of <b>{b.counts.total}</b> sections built</span>
+          <span><b>{b.counts.animated}</b> with motion</span>
+          {b.branch && <span>save points on <b>{b.branch}</b></span>}
+          {b.remote && <span><a href={b.remote.replace(/\.git$/, '').replace(/^git@github\.com:/, 'https://github.com/')} target="_blank" rel="noopener">GitHub ↗</a></span>}
+          <span><a href="/" target="_blank" rel="noopener">Preview ↗</a></span>
+        </div>
+      </header>
+
+      {!b.hasProject && b.counts.total === 0 && (
+        <section>
+          <div class="empty">
+            <h3>Nothing here yet</h3>
+            <p style="margin-top:8px">Go back to Claude and say <b>“start”</b>. The brief, the sections and the design will appear here as you go.</p>
+          </div>
+        </section>
+      )}
+
+      {b.counts.total > 0 && (
+        <section id="sections">
+          <div class="sec-head"><h2>Sections</h2><span class="eyebrow">Figma frame · built screenshots</span></div>
+          {b.sections.map((s, i) => (
+            <article class="card" id={`s-${s.id}`}>
+              <header>
+                <span class="n">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{s.name}</h3>
+                <span class="id">#{s.id}</span>
+                <span class={`badge ${s.built ? 'on' : ''}`}>{statusWord(s)}</span>
+                {s.motion && <span class="badge">{s.motion}</span>}
+              </header>
+              <div class="compare">
+                <div class="frame figma">
+                  <span class="lbl">Figma · desktop</span>
+                  {s.figmaDesktop ? <div class="img"><img src={`/brief/figma/${s.figmaDesktop}`} alt={`${s.name} — Figma`} loading="lazy" /></div> : <div class="img none">export brief/figma/{s.id}.png</div>}
+                </div>
+                {[1440, 834, 390].map((w) => (
+                  <div class="frame">
+                    <span class="lbl">Built · {w}</span>
+                    {s.shots[w] ? <div class="img"><img src={`/brief/shots/${s.shots[w]}`} alt={`${s.name} at ${w}`} loading="lazy" /></div> : <div class="img none">{s.built ? 'no shot yet' : '—'}</div>}
+                  </div>
+                ))}
+                {s.figmaMobile && (
+                  <div class="frame figma">
+                    <span class="lbl">Figma · mobile</span>
+                    <div class="img"><img src={`/brief/figma/${s.figmaMobile}`} alt={`${s.name} — Figma mobile`} loading="lazy" /></div>
+                  </div>
+                )}
+              </div>
+              {s.notes && <p class="notes">{s.notes}</p>}
+              {s.todos && s.todos.length > 0 && <div class="todos">{s.todos.map((t) => <span>TODO · {t}</span>)}</div>}
+            </article>
+          ))}
+        </section>
+      )}
+
+      {(b.fullShots.some(Boolean) || b.scrollShots.length > 0) && (
+        <section>
+          <div class="sec-head"><h2>Whole page</h2><span class="eyebrow">latest full-page screenshots</span></div>
+          <div class="grid3">
+            {b.fullShots.map((f, i) => f && <div><span class="eyebrow">{[390, 834, 1440][i]}</span><img src={`/brief/shots/${f}`} alt="" loading="lazy" /></div>)}
+          </div>
+          {b.scrollShots.length > 0 && (
+            <div style="margin-top:18px">
+              <span class="eyebrow">Scroll frames (motion check)</span>
+              <div class="grid3" style="margin-top:8px">{b.scrollShots.map((f) => <img src={`/brief/shots/${f}`} alt="" loading="lazy" />)}</div>
+            </div>
+          )}
+        </section>
+      )}
+
+      <section id="tokens">
+        <div class="sec-head"><h2>Design tokens</h2><span class="eyebrow">from src/styles/tokens.css</span></div>
+        <div class="swatches">
+          {b.colors.map((c) => <div class="sw"><i style={`background:${c.value}`}></i><b>{c.name}</b><small>{c.value}</small></div>)}
+        </div>
+        <div class="type-list">
+          {b.fonts.map((f) => <div><code>--font-{f.role}</code><span style={`font-family:${f.stack}; font-size:18px; color:var(--ink)`}>{f.stack.split(',')[0].replace(/['"]/g, '')} — The quick brown fox</span></div>)}
+          {b.textSizes.map((t) => <div><code>--text-{t.name}</code><span>{t.value}</span></div>)}
+        </div>
+      </section>
+
+      <section id="docs">
+        <div class="sec-head"><h2>The brief</h2></div>
+        <details open={!b.counts.total}><summary>Project brief <span class={`badge ${b.hasProject ? 'on' : ''}`}>{b.hasProject ? 'filled' : 'not yet'}</span></summary><div class="prose" set:html={b.projectHtml || '<p>Say “start” in Claude to fill this in.</p>'} /></details>
+        <details><summary>Design &amp; inspiration <span class={`badge ${b.hasDesign ? 'on' : ''}`}>{b.hasDesign ? 'filled' : 'not yet'}</span></summary><div class="prose" set:html={b.designHtml || '<p>Filled by the Figma import or a reference site.</p>'} /></details>
+        <details><summary>Review <span class={`badge ${b.hasReview ? 'on' : ''}`}>{b.hasReview ? 'done' : 'not yet'}</span></summary><div class="prose" set:html={b.reviewHtml || '<p>Say “review” when the page is complete.</p>'} /></details>
+        <details><summary>Handoff &amp; links <span class={`badge ${b.hasHandoff ? 'on' : ''}`}>{b.hasHandoff ? 'ready' : 'not yet'}</span></summary><div class="prose" set:html={b.handoffHtml || '<p>Created when the site ships.</p>'} /></details>
+      </section>
+
+      {b.inspiration.length > 0 && (
+        <section>
+          <div class="sec-head"><h2>Inspiration</h2><span class="eyebrow">reference captures</span></div>
+          <div class="grid3">{b.inspiration.map((f) => <div><span class="eyebrow">{f}</span><img src={`/brief/inspiration/${f}`} alt="" loading="lazy" /></div>)}</div>
+        </section>
+      )}
+
+      <section id="savepoints">
+        <div class="sec-head"><h2>Save points</h2><span class="eyebrow">say “undo” in Claude to go back</span></div>
+        {b.savePoints.length ? <div class="log">{b.savePoints.map((s) => <div><span class="d">{s.date}</span><span>{s.text}</span></div>)}</div> : <p class="notes">No save points yet.</p>}
+      </section>
+
+      <div class="foot"><span>updated {b.generatedAt}</span><span>refreshes every 30 s</span><span>this page exists only in the preview — it is never published</span></div>
+    </div>
+    <script>
+      setInterval(() => { if (!document.hidden) location.reload(); }, 30000);
+    </script>
+  </body>
+</html>

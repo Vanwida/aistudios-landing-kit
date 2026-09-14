@@ -1,0 +1,65 @@
+---
+/*
+  Base layout — wraps every page.
+  Head metadata comes from props so /review and /ship can verify them.
+*/
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Absolute URL of the social share image (1200×630). Set in /ship. */
+  ogImage?: string;
+  /** Page language, e.g. "en", "es", "ca". */
+  lang?: string;
+  /** Set to true on pages that must not be indexed (staging, thank-you). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og.jpg',
+  lang = 'en',
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogAbsolute = new URL(ogImage, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogAbsolute} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Brand fonts: add <link rel="preload"> tags here after /figma (see astro-conventions skill) -->
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot name="header" />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+
+    <!-- Motion core: GSAP + ScrollTrigger + Lenis + [data-reveal]. Loads once. -->
+    <script>
+      import '../scripts/motion.js';
+    </script>
+  </body>
+</html>

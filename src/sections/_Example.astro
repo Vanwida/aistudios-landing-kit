@@ -1,0 +1,96 @@
+---
+/*
+  _Example.astro — THE SECTION PATTERN
+  ---------------------------------------------------------------
+  Every section in src/sections/ follows this shape. Copy it, rename it,
+  and replace the content. Keep the structure:
+
+    1. Frontmatter: imports + props (content comes in as props or is hard-coded here).
+    2. <section id="…"> with a unique id (used by /build screenshots and anchor links).
+    3. <Container> to align with the grid.
+    4. Semantic HTML: one <h2> per section (the hero uses <h1>), lists as <ul>.
+    5. [data-reveal] / [data-reveal-group] for standard entrance motion.
+    6. <style> scoped to this section, using tokens only (no hard-coded colours/sizes).
+    7. Optional <script> for section-specific motion, importing from ../scripts/motion.js.
+
+  Files starting with "_" are ignored by /build's section list.
+*/
+import Container from '../components/Container.astro';
+import Button from '../components/Button.astro';
+import { Image } from 'astro:assets';
+import placeholder from '../assets/placeholder.svg';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  text?: string;
+}
+const {
+  eyebrow = 'Section pattern',
+  title = 'A section is one file: content, style and motion together',
+  text = 'Replace this with the real copy from the brief. Use tokens for every colour, size and space.',
+} = Astro.props;
+---
+
+<section id="example" class="section example" aria-labelledby="example-title">
+  <Container>
+    <div class="example__grid">
+      <div class="example__copy">
+        <p class="eyebrow" data-reveal>{eyebrow}</p>
+        <h2 id="example-title" data-reveal data-reveal-delay="0.1">{title}</h2>
+        <p class="lede" data-reveal data-reveal-delay="0.2">{text}</p>
+        <div class="example__actions" data-reveal data-reveal-delay="0.3">
+          <Button href="#contact">Primary action</Button>
+          <Button href="#more" variant="secondary">Secondary</Button>
+        </div>
+      </div>
+      <figure class="example__media" data-reveal data-reveal-y="40">
+        <Image src={placeholder} alt="Describe the image for people who cannot see it" widths={[480, 960]} sizes="(min-width: 1024px) 50vw, 100vw" />
+      </figure>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .example__grid {
+    display: grid;
+    gap: var(--grid-gap);
+    align-items: center;
+  }
+  .example__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .example__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+  .example__media {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-alt);
+  }
+
+  /* tablet and up */
+  @media (min-width: 768px) {
+    .example__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Section-specific motion goes here. Example: a subtle parallax on the image.
+  import { gsap, prefersReducedMotion } from '../scripts/motion.js';
+
+  if (!prefersReducedMotion) {
+    gsap.to('#example .example__media img', {
+      yPercent: -8,
+      ease: 'none',
+      scrollTrigger: { trigger: '#example', start: 'top bottom', end: 'bottom top', scrub: true },
+    });
+  }
+</script>

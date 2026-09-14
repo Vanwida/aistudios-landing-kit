@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Landing Kit Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #f6f6f2; --bg-raised: #fbfbf8; --ink: #17191b; --ink-2: #5a5f5c; --ink-3: #8b918d;
+    --line: #dcdfd9; --accent: #1f6f5f; --accent-ink: #fff; --accent-soft: #e2efe9;
+    --calm: #6b5f3b; --calm-soft: #edeae2;
+    --font-display: 'Instrument Serif', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141716; --bg-raised: #1b1f1e; --ink: #e9e8e2; --ink-2: #b1b5af; --ink-3: #7c827d;
+      --line: #2c3130; --accent: #6fc4a8; --accent-ink: #0f1a16; --accent-soft: #1d2f29;
+      --calm: #d8c894; --calm-soft: #2b2820;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141716; --bg-raised: #1b1f1e; --ink: #e9e8e2; --ink-2: #b1b5af; --ink-3: #7c827d;
+    --line: #2c3130; --accent: #6fc4a8; --accent-ink: #0f1a16; --accent-soft: #1d2f29;
+    --calm: #d8c894; --calm-soft: #2b2820;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px;
+    line-height: 1.6; padding-inline: clamp(16px, 4vw, 40px); padding-block: 0 90px; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; line-height: 1.06; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(44px, 8vw, 82px); }
+  h2 { font-size: clamp(28px, 3.8vw, 40px); }
+  h3 { font-size: 22px; }
+  h4 { font-size: 19px; }
+  p { margin: 0; max-width: 64ch; }
+  em { font-family: var(--font-display); font-style: italic; font-size: 1.06em; }
+  strong, b { font-weight: 600; }
+  code { font-family: var(--font-mono); font-size: 0.85em; background: var(--accent-soft); padding: 1.5px 6px; border-radius: 4px; white-space: nowrap; }
+  a { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+
+  .wrap { max-width: 1060px; margin-inline: auto; }
+
+  header.top { padding-block: 56px 34px; display: grid; gap: 18px; max-width: 760px; }
+  header.top .lede { font-size: 19px; color: var(--ink-2); }
+
+  /* layout with sticky toc */
+  .layout { display: grid; grid-template-columns: 1fr; gap: 0; }
+  .layout > * { min-width: 0; }
+  .table-scroll { max-width: 100%; }
+  nav.toc { position: sticky; top: 0; z-index: 6; background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-block: 1px solid var(--line); margin-inline: calc(-1 * clamp(16px, 4vw, 40px)); padding-inline: clamp(16px, 4vw, 40px); }
+  nav.toc ol { list-style: none; margin: 0 auto; padding: 0; max-width: 1060px; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+  nav.toc ol::-webkit-scrollbar { display: none; }
+  nav.toc a { display: block; padding: 12px 11px; font-size: 13px; color: var(--ink-2); white-space: nowrap; text-decoration: none; border-bottom: 2px solid transparent; }
+  nav.toc a:hover { color: var(--ink); }
+  nav.toc a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+  @media (min-width: 1000px) {
+    .layout { grid-template-columns: 178px 1fr; gap: 56px; align-items: start; }
+    nav.toc { position: sticky; top: 28px; background: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+      border: 0; margin: 0; padding: 0; }
+    nav.toc ol { flex-direction: column; gap: 0; overflow: visible; }
+    nav.toc a { padding: 6px 0 6px 13px; border-bottom: 0; border-left: 2px solid var(--line); }
+    nav.toc a[aria-current="true"] { border-left-color: var(--accent); border-bottom: 0; }
+  }
+
+  section { padding-block: 46px; border-top: 1px solid var(--line); scroll-margin-top: 60px; }
+  section:first-of-type { border-top: 0; padding-top: 8px; }
+  @media (min-width: 1000px) { section { scroll-margin-top: 28px; } }
+  .sec-head { display: grid; gap: 10px; margin-bottom: 26px; }
+
+  /* start here — numbered steps */
+  ol.steps { list-style: none; counter-reset: st; margin: 0; padding: 0; display: grid; gap: 0; }
+  ol.steps li { counter-increment: st; display: grid; grid-template-columns: 38px 1fr; gap: 16px;
+    padding-block: 16px; border-top: 1px solid var(--line); }
+  ol.steps li:first-child { border-top: 0; }
+  ol.steps li::before { content: counter(st); font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+    border: 1px solid var(--line); border-radius: 50%; width: 26px; height: 26px; display: grid; place-content: center; margin-top: 2px; }
+  ol.steps .body { display: block; }
+  ol.steps .body b { font-weight: 500; }
+  ol.steps .body small { display: block; color: var(--ink-2); font-size: 14.5px; margin-top: 4px; }
+
+  /* command table */
+  .cmds { display: grid; gap: 0; }
+  .cmd { display: grid; grid-template-columns: 168px 1fr; gap: 6px 22px; padding-block: 12px; border-top: 1px solid var(--line); align-items: baseline; }
+  .cmd:first-child { border-top: 0; }
+  .cmd .c { font-family: var(--font-mono); font-size: 14px; color: var(--ink); }
+  .cmd .d { color: var(--ink-2); font-size: 15px; }
+  .cmd .d b { color: var(--ink); font-weight: 500; }
+
+  /* ten ideas */
+  .ideas { display: grid; gap: 0; }
+  .idea { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding-block: 24px; border-top: 1px solid var(--line); }
+  .idea .n { font-family: var(--font-display); font-size: 34px; color: var(--ink-3); line-height: 1; padding-top: 2px; }
+  .idea .body { display: grid; gap: 9px; }
+  .idea h3 { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .idea .fig { font-family: var(--font-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase;
+    background: var(--accent-soft); color: var(--ink-2); padding: 3px 8px; border-radius: 4px; }
+  .idea p { color: var(--ink-2); }
+  .idea p b { color: var(--ink); }
+
+  /* translate list inside idea 8 */
+  dl.translate { display: grid; gap: 0; margin: 6px 0 0; }
+  dl.translate > div { display: grid; grid-template-columns: 150px 1fr; gap: 4px 18px; padding-block: 9px; border-top: 1px solid var(--line); }
+  dl.translate dt { font-weight: 500; font-size: 15px; }
+  dl.translate dd { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+  /* stuck */
+  .stuck { display: grid; gap: 10px; }
+  .stuck-row { display: grid; grid-template-columns: minmax(200px, 0.85fr) 1.15fr; gap: 8px 24px;
+    background: var(--bg-raised); border: 1px solid var(--line); border-radius: 9px; padding: 14px 18px; }
+  .stuck-row .sit { font-weight: 500; }
+  .stuck-row .say { color: var(--ink-2); font-size: 15px; }
+  .stuck-row .say b { color: var(--ink); font-weight: 500; }
+  .meta-rule { margin-top: 20px; background: var(--calm-soft); border-radius: 9px; padding: 18px 22px; display: grid; gap: 6px; }
+  .meta-rule p { font-family: var(--font-display); font-size: 24px; line-height: 1.2; }
+
+  /* glossary */
+  table.gloss { width: 100%; border-collapse: collapse; font-size: 15px; }
+  table.gloss th { text-align: left; font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 400; padding: 0 14px 10px 0; border-bottom: 1px solid var(--line); }
+  table.gloss td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.gloss td:first-child { font-weight: 500; white-space: nowrap; }
+  table.gloss td:nth-child(2) { color: var(--ink-2); }
+  table.gloss td:nth-child(3) { color: var(--ink-3); font-size: 14px; }
+  .table-scroll { overflow-x: auto; }
+
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 26px 44px; }
+  ul.plain { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+  ul.plain li { display: grid; grid-template-columns: 14px 1fr; gap: 10px; color: var(--ink-2); }
+  ul.plain li::before { content: '—'; color: var(--ink-3); }
+  ul.plain li b { color: var(--ink); font-weight: 500; }
+
+  .quality { background: var(--bg-raised); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; display: grid; gap: 12px; }
+
+  @media (max-width: 620px) {
+    .stuck-row { grid-template-columns: 1fr; }
+    .cmd { grid-template-columns: 1fr; }
+    dl.translate > div { grid-template-columns: 1fr; }
+    .idea { grid-template-columns: 30px 1fr; gap: 12px; }
+    .idea .n { font-size: 26px; }
+  }
+</style>
+<style>
+  html { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">AISTUDIOS Landing Kit · handbook for designers</p>
+    <h1>You already know the hard part</h1>
+    <p class="lede">You know how to design a landing page. This explains the <em>other</em> half — what happens between “design done” and “site live” — using things you already understand from Figma. Read it once; keep it open for the words.</p>
+  </header>
+
+  <div class="layout">
+    <nav class="toc" aria-label="Contents">
+      <ol>
+        <li><a href="#start">Start here</a></li>
+        <li><a href="#commands">The commands</a></li>
+        <li><a href="#ideas">Ten ideas</a></li>
+        <li><a href="#talking">Talking to Claude</a></li>
+        <li><a href="#stuck">When stuck</a></li>
+        <li><a href="#glossary">Glossary</a></li>
+        <li><a href="#setup">Setup</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <section id="start">
+        <div class="sec-head"><p class="eyebrow">Five minutes</p><h2>Start a new project</h2></div>
+        <ol class="steps">
+          <li><span class="body"><b>Copy this folder</b> and rename the copy after the client — <code>acme-landing</code>.<small>Never work inside the original kit. It stays clean for the next project.</small></span></li>
+          <li><span class="body"><b>Open the Claude desktop app → Code → Open folder</b>, choose your copy, and set the permission mode to <b>Auto</b>.</span></li>
+          <li><span class="body">Type <code>/start</code> and pick where you want to begin. Then just talk.<small>Claude asks with clickable options — the client first, then the site's architecture. Give it a reference site and the options come pre-filled from it.</small></span></li>
+          <li><span class="body">Say <b>design it</b>. Claude drafts the design in Figma; you refine it in Figma, the way you always have.<small>When you're happy, say <b>import</b> and Claude brings your refined design into the kit.</small></span></li>
+          <li><span class="body">Say <b>next</b>. Claude builds one section, and the board shows your Figma frame next to the screenshots at desktop, tablet and mobile.<small>Say <b>next</b> to continue, or tell it what's off in your own words.</small></span></li>
+          <li><span class="body">When the page is complete: <b>animate</b> → <b>review</b> → <b>ship</b>.<small><b>ship</b> gives a preview link for the client; <b>go live</b> puts it on the real site.</small></span></li>
+        </ol>
+        <p style="margin-top:24px;color:var(--ink-2)">That's the whole workflow. Two places to look: the <b>preview</b> at <code>localhost:4321</code> and the <b>board</b> at <code>localhost:4321/board</code> — your project, rendered: the brief, every section with its frame beside the screenshots, the tokens as swatches, the review, the links, the save points. The board only exists on your computer; it is never published. Close the app any time; <code>/help</code> brings you back.</p>
+      </section>
+
+      <section id="commands">
+        <div class="sec-head"><p class="eyebrow">Reference</p><h2>The commands</h2>
+        <p>Two words to remember. The rest is talking.</p></div>
+        <div class="cmds">
+          <div class="cmd"><span class="c">/start</span><span class="d"><b>Where do you want to begin?</b> New project · I have a finished Figma · I have a reference site · continue this project.</span></div>
+          <div class="cmd"><span class="c">/help</span><span class="d"><b>Where am I and what's next?</b> Three lines of state, then the next actions as options — plus “something's wrong”.</span></div>
+        </div>
+        <p style="margin-top:18px;color:var(--ink-2)">Everything else is plain words: <b>design it</b> · <b>import</b> · <b>next</b> · <b>animate</b> · <b>review</b> · <b>ship</b> · <b>go live</b> · <b>undo</b> · <b>this looks wrong</b>. Shortcuts exist for each (<code>/design</code>, <code>/figma</code>, <code>/build</code>, <code>/animate</code>, <code>/review</code>, <code>/ship</code>, <code>/undo</code>, <code>/fix</code>) — you never need them.</p>
+        </div>
+        <div class="grid2" style="margin-top:34px">
+          <div><h4 style="margin-bottom:10px">What you never have to do</h4>
+            <ul class="plain"><li>Type terminal commands</li><li>Install libraries</li><li>Read code</li><li>Understand git, branches or merges</li><li>Configure GitHub or Vercel</li><li>Resolve conflicts</li><li>Read a <code>.md</code> file</li></ul></div>
+          <div><h4 style="margin-bottom:10px">What only you can do</h4>
+            <ul class="plain"><li>Every design decision</li><li>Refining the Figma draft — it's yours</li><li>Exporting assets and frames from Figma</li><li>Logging into Figma, GitHub and Vercel the first time</li><li>Judging whether it <b>feels</b> right</li></ul></div>
+        </div>
+      </section>
+
+      <section id="ideas">
+        <div class="sec-head"><p class="eyebrow">The mental model</p><h2>Ten ideas that explain everything</h2>
+        <p>In teaching order. Each one maps to something you already do in Figma.</p></div>
+        <div class="ideas">
+          <div class="idea"><span class="n">1</span><div class="body"><h3>A website is a folder of files <span class="fig">≈ a Figma file</span></h3>
+            <p>Just as a Figma file has pages and frames, a website is a folder: one file per section of the page, a file with the colours and type, a folder of images. When you open the folder in Claude Code, Claude edits those files. Nothing magical.</p></div></div>
+
+          <div class="idea"><span class="n">2</span><div class="body"><h3>Localhost is your private preview <span class="fig">≈ prototype preview</span></h3>
+            <p><code>http://localhost:4321</code> is the page running on <b>your</b> computer only. It refreshes itself every time Claude changes a file. It is not on the internet until you ship.</p></div></div>
+
+          <div class="idea"><span class="n">3</span><div class="body"><h3>Tokens are variables <span class="fig">≈ Figma variables</span></h3>
+            <p>Every colour, font size, spacing and radius lives in one file with names like <code>--color-primary</code>. Sections use the names, never raw values — change one value, the whole site updates. <code>/figma</code> fills this file from your design.</p></div></div>
+
+          <div class="idea"><span class="n">4</span><div class="body"><h3>Sections are components <span class="fig">≈ components</span></h3>
+            <p>One section of the page is one file. Claude builds them top to bottom and finishes each before the next. It's also why two designers can work on the same site without stepping on each other.</p></div></div>
+
+          <div class="idea"><span class="n">5</span><div class="body"><h3>AI drafts, you refine — then fidelity</h3>
+            <p>Claude draws the first Figma from the brief and the reference; you make it yours. From then on, Claude's job is to match your Figma, not improve it. Where Figma doesn't say — hover states, tablet layout, what moves — Claude picks the quiet option and tells you in one line. <b>Your job is to look and say what's off, in your words:</b> “more air above the title”, “the photo crop is wrong”, “too fast”.</p></div></div>
+
+          <div class="idea"><span class="n">6</span><div class="body"><h3>Screenshots are how Claude sees</h3>
+            <p>After every section Claude takes screenshots at 390, 834 and 1440 and compares them with your exported frame. A second critic looks with fresh eyes and lists the differences. You see both on the board. <b>So always export your section frames as PNG</b> into <code>brief/figma/</code> — that's the reference everything is checked against.</p></div></div>
+
+          <div class="idea"><span class="n">7</span><div class="body"><h3>Save points are version history <span class="fig">≈ version history</span></h3>
+            <p>Every finished section, motion pass and review creates a save point. <code>/undo</code> lists them; you can jump back, and forward again. Nothing is ever lost.</p></div></div>
+
+          <div class="idea"><span class="n">8</span><div class="body"><h3>GitHub is the Figma cloud, for code</h3>
+            <p>GitHub keeps a copy of the project online with all its save points — like your Figma file living in the cloud. Every time Claude saves, that copy updates. The agency can see it; a teammate can pick it up; nothing depends on your laptop.</p>
+            <dl class="translate">
+              <div><dt>Repository</dt><dd>The project's online home. One per landing page.</dd></div>
+              <div><dt>Commit</dt><dd>A save point with a name.</dd></div>
+              <div><dt>Diff</dt><dd>What changed between two save points — like Figma's compare changes. You'll never read one; Claude does.</dd></div>
+              <div><dt>Branch</dt><dd>A parallel copy to work in, like a Figma branch. Claude works in <code>draft</code>; <code>main</code> is what's live. You never choose.</dd></div>
+              <div><dt>Merge</dt><dd>Applying a branch to <code>main</code>. Claude does it when you say go live. If two people changed the same section, Claude reconciles it and tells you in one sentence.</dd></div>
+              <div><dt>Pull request</dt><dd>A review request: “here's what changed, approve it to make it live.” Only if your agency wants a review gate.</dd></div>
+            </dl></div></div>
+
+          <div class="idea"><span class="n">9</span><div class="body"><h3>Vercel is the publish button <span class="fig">≈ publish</span></h3>
+            <p>Vercel takes the files from GitHub and puts them on the internet, with HTTPS and a URL, in about a minute. Every save gives a <b>preview link</b> to send the client; <em>go live</em> updates the real domain. The first time you log in with your browser; after that it's invisible.</p></div></div>
+
+          <div class="idea"><span class="n">10</span><div class="body"><h3>Motion is a vocabulary, not a library</h3>
+            <p>You don't need to know GSAP or Three.js. You need the words: <b>reveal, stagger, parallax, pin, scrub, morph, ticker, marquee, curtain footer, magnetic hover.</b> <code>/inspire</code> finds them in sites you love; <code>/animate</code> proposes a menu in those words; you say yes or no. The taste rules are built in — slow, few, intentional, and always a calm version for people who prefer less motion.</p></div></div>
+        </div>
+      </section>
+
+      <section id="talking">
+        <div class="sec-head"><p class="eyebrow">The only “prompting” you need</p><h2>How to talk to Claude</h2></div>
+        <div class="grid2">
+          <ul class="plain">
+            <li><b>Give it a brief, not a vibe.</b> The <code>/new-landing</code> questions are the brief.</li>
+            <li><b>Show, don't describe.</b> Paste a link, export a frame, point at a screenshot.</li>
+            <li><b>React like a creative director.</b> “The hero feels cramped.” “This button is too loud.” “The story should hold longer.”</li>
+          </ul>
+          <ul class="plain">
+            <li><b>One thing at a time.</b> Let it finish a section before asking for the next.</li>
+            <li><b>Say when you don't understand.</b> It will re-explain without jargon.</li>
+            <li><b>Short answers are fine.</b> “Yes.” “The second one.” “Black.”</li>
+          </ul>
+        </div>
+        <div class="quality" style="margin-top:30px">
+          <h4>What high quality looks like</h4>
+          <p>Warm surfaces, one distinctive display face, generous space, media that carries the story, motion that moves at the pace of reading, and nothing that looks like a template.</p>
+          <p>If it looks like every AI page you've seen — purple gradients, three identical cards with icons in circles, things bouncing in from the sides — it isn't done. Say <b>“this looks generic”</b> and Claude knows what to change.</p>
+        </div>
+      </section>
+
+      <section id="stuck">
+        <div class="sec-head"><p class="eyebrow">The calm list</p><h2>When stuck</h2>
+        <p>Nothing here is your fault, and nothing here loses your work.</p></div>
+        <div class="stuck">
+          <div class="stuck-row"><span class="sit">The preview is blank or won't load</span><span class="say">Say <b>“blank page”</b> — or <code>/help</code> → “something's wrong”. Claude checks the preview server and restarts it.</span></div>
+          <div class="stuck-row"><span class="sit">There's an error message in the chat</span><span class="say">Don't read it. Say <b>“something's wrong”</b>. If Claude asks what you were doing, answer in one line.</span></div>
+          <div class="stuck-row"><span class="sit">It doesn't look like my Figma</span><span class="say">Say what's different in your words — <b>“the heading is too small and breaks into three lines”</b>. Or ask to see the screenshots next to your frame.</span></div>
+          <div class="stuck-row"><span class="sit">It changed something I didn't ask for</span><span class="say">Say <b>“you changed X — put it back”</b>. If it's more than one thing, say <b>“undo”</b> and pick the last good save point.</span></div>
+          <div class="stuck-row"><span class="sit">The motion feels wrong</span><span class="say">Use these words: <b>too fast, too much, too bouncy, should hold longer, should be subtler</b>. Or “remove the effect on the cards”.</span></div>
+          <div class="stuck-row"><span class="sit">It asked a technical question I don't understand</span><span class="say">Say <b>“I don't know — choose the most standard option and tell me in one line”</b>. That is always allowed.</span></div>
+          <div class="stuck-row"><span class="sit">It asked me to log in somewhere</span><span class="say">Normal the first time. A browser window opens; log in with your own account; come back and say <b>“done”</b>.</span></div>
+          <div class="stuck-row"><span class="sit">It's taking a long time</span><span class="say">Installing, building and screenshots take up to a minute. After three minutes with no message, say <b>“status?”</b>.</span></div>
+          <div class="stuck-row"><span class="sit">The app closed, or my laptop died</span><span class="say">Open the folder again and type <code>/help</code>. Everything is on the board and in save points.</span></div>
+          <div class="stuck-row"><span class="sit">The client wants changes after it's live</span><span class="say">Tell Claude what they said, in their words. Then <b>“ship”</b> for a preview link, <b>“go live”</b> when approved.</span></div>
+          <div class="stuck-row"><span class="sit">Nothing works and I'm out of patience</span><span class="say">Say <b>“I'm stuck — save everything and tell me where we are”</b>. Then take a break. It'll be there.</span></div>
+        </div>
+        <div class="meta-rule">
+          <p class="eyebrow">The meta-rule</p>
+          <p>Describe what you see, in your words. Never diagnose.</p>
+        </div>
+      </section>
+
+      <section id="glossary">
+        <div class="sec-head"><p class="eyebrow">Reference</p><h2>Glossary</h2>
+        <p>Everything a developer might say to you, translated.</p></div>
+        <div class="table-scroll">
+        <table class="gloss">
+          <thead><tr><th>You'll hear</th><th>It means</th><th>In Figma</th></tr></thead>
+          <tbody>
+            <tr><td>Astro</td><td>The tool that turns our section files into a website</td><td>—</td></tr>
+            <tr><td>Section</td><td>One part of the page, one file</td><td>Component / section frame</td></tr>
+            <tr><td>Tokens</td><td>Named colours, sizes and spacings in one file</td><td>Variables / styles</td></tr>
+            <tr><td>CSS</td><td>The styling: colours, type, layout</td><td>The Design panel</td></tr>
+            <tr><td>HTML</td><td>The structure: headings, lists, buttons, images</td><td>Layers panel</td></tr>
+            <tr><td>JavaScript</td><td>Behaviour: motion, menus, forms</td><td>Prototype interactions</td></tr>
+            <tr><td>GSAP · ScrollTrigger</td><td>The motion tools we use, driven by scroll</td><td>Smart Animate, on steroids</td></tr>
+            <tr><td>Lenis</td><td>Smooth, inertial scrolling</td><td>—</td></tr>
+            <tr><td>Three.js</td><td>3D in the browser (rarely needed)</td><td>—</td></tr>
+            <tr><td>Localhost · dev server</td><td>Your private preview on your computer</td><td>Prototype preview</td></tr>
+            <tr><td>Build</td><td>Packaging the files for the internet</td><td>Export</td></tr>
+            <tr><td>Save point · commit</td><td>A named version you can return to</td><td>Version history entry</td></tr>
+            <tr><td>Repo</td><td>The project's online home on GitHub</td><td>The Figma file in the cloud</td></tr>
+            <tr><td>Diff</td><td>What changed between two save points</td><td>Compare changes</td></tr>
+            <tr><td>Branch</td><td>A parallel copy; <code>main</code> is what's live</td><td>Figma branch</td></tr>
+            <tr><td>Merge</td><td>Applying a branch to <code>main</code></td><td>Merging a branch</td></tr>
+            <tr><td>Pull request</td><td>“Here's what changed, approve to go live”</td><td>Branch review</td></tr>
+            <tr><td>Push</td><td>Sending save points to GitHub</td><td>Autosave to the cloud</td></tr>
+            <tr><td>Vercel</td><td>The service that publishes the site</td><td>Publish / share prototype</td></tr>
+            <tr><td>Preview link</td><td>A URL of the latest saved version</td><td>Prototype link</td></tr>
+            <tr><td>Production · live</td><td>The real site on the real domain</td><td>—</td></tr>
+            <tr><td>Domain · DNS</td><td>The address, and the settings that point it at Vercel</td><td>—</td></tr>
+            <tr><td>Breakpoint</td><td>The widths where the layout changes</td><td>Frames: 390 / 834 / 1440</td></tr>
+            <tr><td>Responsive</td><td>The page works at every width</td><td>Auto layout + constraints</td></tr>
+            <tr><td>Reveal · stagger</td><td>Elements appearing on scroll, one after another</td><td>Smart animate delays</td></tr>
+            <tr><td>Parallax</td><td>Layers moving at different speeds</td><td>—</td></tr>
+            <tr><td>Pin · scrub</td><td>A section holds while scrolling drives an animation</td><td>—</td></tr>
+            <tr><td>Reduced motion</td><td>A system setting for less animation; we respect it</td><td>—</td></tr>
+            <tr><td>Console error</td><td>A problem the browser reports — Claude reads it, you don't</td><td>—</td></tr>
+            <tr><td>Alt text</td><td>A description of an image for people who can't see it</td><td>Layer name, but for humans</td></tr>
+            <tr><td>Contrast</td><td>Text vs background legibility (AA = 4.5:1)</td><td>Contrast plugin</td></tr>
+            <tr><td>OG image</td><td>The image shown when the link is shared</td><td>Social cover</td></tr>
+            <tr><td>Lighthouse</td><td>A speed and quality score (aim for 90+)</td><td>—</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </section>
+
+      <section id="setup">
+        <div class="sec-head"><p class="eyebrow">Once per computer</p><h2>What you need installed</h2></div>
+        <div class="grid2">
+          <div><h4 style="margin-bottom:10px">Software</h4>
+            <ul class="plain">
+              <li><b>Node.js 22</b> — nodejs.org, the LTS button</li>
+              <li><b>Git</b> — macOS asks to install it the first time; click Install</li>
+              <li><b>GitHub CLI</b> — cli.github.com, for the online copy</li>
+              <li><b>Chrome</b></li>
+            </ul></div>
+          <div><h4 style="margin-bottom:10px">Accounts</h4>
+            <ul class="plain">
+              <li><b>Claude</b>, with Claude Code — permission mode set to <b>Auto</b></li>
+              <li><b>GitHub</b> — free</li>
+              <li><b>Vercel</b> — free, sign in with GitHub</li>
+              <li><b>Figma</b> — you have it</li>
+            </ul></div>
+        </div>
+        <div class="quality" style="margin-top:30px">
+          <h4>Folders you'll actually open</h4>
+          <ul class="plain" style="margin-top:8px">
+            <li><code>brief/figma/</code> — your Figma frames exported as PNG (the board shows the rest)</li>
+            <li><code>src/assets/</code> — images and logos you export from Figma</li>
+            <li><code>public/video/</code> — videos</li>
+          </ul>
+          <p style="color:var(--ink-2)">Everything else is Claude's.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var map = {};
+  links.forEach(function (a) {
+    var id = a.getAttribute('href').slice(1);
+    var el = document.getElementById(id);
+    if (el) map[id] = a;
+  });
+  if (!('IntersectionObserver' in window)) return;
+  var seen = {};
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0; });
+    var best = null, bestVal = 0;
+    Object.keys(seen).forEach(function (id) { if (seen[id] > bestVal) { bestVal = seen[id]; best = id; } });
+    links.forEach(function (a) { a.removeAttribute('aria-current'); });
+    if (best && map[best]) map[best].setAttribute('aria-current', 'true');
+  }, { rootMargin: '-10% 0px -70% 0px', threshold: [0, 0.2, 0.6, 1] });
+  Object.keys(map).forEach(function (id) { io.observe(document.getElementById(id)); });
+})();
+</script>
+
+</body>
+</html>

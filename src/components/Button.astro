@@ -1,0 +1,76 @@
+---
+/*
+  Button — renders <a> when href is given, <button> otherwise.
+  Variants map to the Figma button component. Add variants here, not in sections.
+*/
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'md' | 'lg';
+  type?: 'button' | 'submit';
+  class?: string;
+  /** Opens in a new tab (external links). */
+  external?: boolean;
+}
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className = '',
+  external = false,
+} = Astro.props;
+
+const classes = ['btn', `btn--${variant}`, `btn--${size}`, className];
+const Tag = href ? 'a' : 'button';
+const attrs = href
+  ? { href, ...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {}) }
+  : { type };
+---
+
+<Tag class:list={classes} {...attrs}>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 0.8em 1.4em;
+    border-radius: var(--radius-full);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-sm);
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+  .btn:active { transform: translateY(1px); }
+
+  .btn--lg { font-size: var(--text-base); padding: 1em 1.8em; }
+
+  .btn--primary {
+    background: var(--color-primary);
+    color: var(--color-primary-contrast);
+  }
+  .btn--primary:hover { background: color-mix(in srgb, var(--color-primary), black 12%); }
+
+  .btn--secondary {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+  .btn--secondary:hover { border-color: var(--color-text); }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-text);
+    padding-inline: 0.4em;
+  }
+  .btn--ghost:hover { color: var(--color-accent); }
+</style>

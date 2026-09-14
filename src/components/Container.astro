@@ -1,0 +1,13 @@
+---
+/* Centers content and applies the page gutter. Widths come from tokens.css. */
+interface Props {
+  size?: 'default' | 'wide' | 'narrow';
+  class?: string;
+}
+const { size = 'default', class: className = '' } = Astro.props;
+const sizeClass = size === 'default' ? '' : `container--${size}`;
+---
+
+<div class:list={['container', sizeClass, className]}>
+  <slot />
+</div>
