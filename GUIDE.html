@@ -3,332 +3,319 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How to work with the kit</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap">
+<title>Kit reference</title>
 <style>
   :root {
-    --bg: #f6f6f2; --bg-raised: #fbfbf8; --ink: #17191b; --ink-2: #5a5f5c; --ink-3: #8b918d;
-    --line: #dcdfd9; --accent: #1f6f5f; --accent-ink: #fff; --accent-soft: #e2efe9;
-    --calm: #6b5f3b; --calm-soft: #edeae2;
-    --font-display: 'Instrument Serif', Georgia, serif;
-    --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    --radius: 12px; --gap: 12px; --pad: 18px;
+    --bg: #ffffff; --fg: #111111; --muted: #6b7280; --border: #e5e7eb; --subtle: #f9fafb;
+    --code-bg: #f3f4f6; --code-border: #e5e7eb; --btn: #111111; --btn-fg: #ffffff; --ok: #15803d; --focus: #2563eb;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --w: 1000px; --pad: 16px; --radius: 8px;
   }
   * { box-sizing: border-box; }
   html { color-scheme: light; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15.5px; line-height: 1.5; padding-inline: clamp(16px, 3vw, 32px); padding-block: 0 72px; -webkit-font-smoothing: antialiased; }
-  a { color: inherit; text-decoration: none; }
-  a:hover, a:focus-visible { text-decoration: underline; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  h1, h2 { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; line-height: 1.05; margin: 0; text-wrap: balance; }
-  h1 { font-size: clamp(38px, 6vw, 60px); }
-  h2 { font-size: clamp(26px, 3.2vw, 34px); }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  h1 { font-size: 26px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 6px; }
+  h2 { font-size: 17px; font-weight: 650; margin: 0 0 10px; }
   p { margin: 0; }
-  b { font-weight: 600; }
-  svg.i { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-  .wrap { max-width: 1040px; margin-inline: auto; }
-  .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  code { font-family: var(--mono); font-size: 13px; }
 
-  /* The phrase you type */
-  .pill { display: inline-block; font-family: var(--font-mono); font-size: 14.5px; background: var(--ink); color: var(--bg); padding: 4px 11px; border-radius: 8px; }
-  .quote { font-family: var(--font-mono); font-size: 13.5px; background: var(--accent-soft); color: var(--ink); padding: 2px 7px; border-radius: 6px; }
-  .tell { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-  .tell .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  /* Sticky top bar */
+  .top { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .top .in { max-width: var(--w); margin: 0 auto; padding: 10px var(--pad); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: 14px; }
+  .top strong { font-weight: 650; }
+  .top nav { display: flex; gap: 14px; }
+  .top nav a { color: var(--muted); text-decoration: none; }
+  .top nav a:hover { color: var(--fg); }
+  .top .links { margin-left: auto; display: flex; gap: 8px; }
+  .top .links a { text-decoration: none; border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: 13px; background: var(--subtle); }
+  .top .links a:hover { border-color: var(--muted); }
 
-  /* Sticky bar */
-  .bar { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); margin-inline: calc(-1 * clamp(16px, 3vw, 32px)); padding-inline: clamp(16px, 3vw, 32px); }
-  .bar .in { max-width: 1040px; margin-inline: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; padding-block: 10px; font-size: 14px; color: var(--ink-2); }
-  .bar .in b { color: var(--ink); font-weight: 500; }
-  .bar .pill { font-size: 14px; padding: 4px 10px; white-space: nowrap; }
-  .bar .k { display: flex; align-items: center; gap: 8px; }
-  .places { display: flex; gap: 8px; margin-left: auto; }
-  .place { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px 6px 10px; font-size: 13px; background: var(--bg-raised); color: var(--ink); }
-  .place svg.i { width: 18px; height: 18px; color: var(--accent); }
+  main { max-width: var(--w); margin: 0 auto; padding: 28px var(--pad) 64px; display: grid; gap: 36px; }
+  .lead { color: var(--muted); }
+  .find { width: 100%; max-width: 420px; font: inherit; font-size: 15px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); margin-top: 14px; }
+  .find::placeholder { color: var(--muted); }
 
-  /* Header */
-  .head { padding-block: 40px 28px; display: grid; gap: 16px; }
-  .head p:not(.eyebrow) { color: var(--ink-2); font-size: 17px; max-width: 60ch; }
-  .head p b { color: var(--ink); font-weight: 500; }
+  /* Numbered list (starting) */
+  .steps { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: var(--radius); }
+  .steps li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 12px var(--pad); border-top: 1px solid var(--border); align-items: start; }
+  .steps li:first-child { border-top: 0; }
+  .steps .n { font-weight: 650; color: var(--muted); }
 
-  section { padding-block: 26px; }
-  .sh { display: grid; gap: 6px; margin-bottom: 16px; }
-  .sh p { color: var(--ink-2); max-width: 60ch; }
+  /* Tables: one consistent container for every lookup */
+  .tbl { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); background: var(--subtle); padding: 10px var(--pad); border-bottom: 1px solid var(--border); }
+  td { vertical-align: top; padding: 12px var(--pad); border-top: 1px solid var(--border); }
+  tr:first-child td { border-top: 0; }
+  col.c1 { width: 27%; } col.c2 { width: 35%; } col.c3 { width: 38%; }
+  td.want { font-weight: 550; }
+  td.then { color: var(--muted); }
+  td.then b { color: var(--fg); font-weight: 600; }
+  tr[hidden] { display: none; }
 
-  /* Sitting down: three numbered lines in one panel */
-  .panel { background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px var(--pad); }
-  .panel ol { list-style: none; margin: 0; padding: 0; }
-  .panel li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; padding-block: 12px; border-top: 1px solid var(--line); }
-  .panel li:first-child { border-top: 0; }
-  .panel .n { font-family: var(--font-display); font-size: 26px; line-height: 1; color: var(--accent); padding-top: 2px; }
-  .panel li p { color: var(--ink-2); }
-  .panel li p b { color: var(--ink); font-weight: 500; }
-
-  /* The steps */
-  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--gap); }
-  .step { position: relative; text-align: left; font: inherit; color: inherit; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); display: grid; gap: 10px; align-content: start; cursor: pointer; min-width: 0; transition: border-color .15s, background .15s; }
-  .step:hover { border-color: var(--ink-3); }
-  .step .top { display: flex; align-items: center; gap: 10px; padding-right: 88px; }
-  .step .n { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); }
-  .step .top svg.i { color: var(--accent); width: 24px; height: 24px; }
-  .step h3 { font-family: var(--font-display); font-weight: 400; font-size: 25px; line-height: 1.05; margin: 0; }
-  .step p { color: var(--ink-2); font-size: 14.5px; }
-  .step p b { color: var(--ink); font-weight: 500; }
-  .step .then { display: grid; grid-template-columns: 18px 1fr; gap: 8px; align-items: start; }
-  .step .then svg.i { width: 18px; height: 18px; color: var(--ink-3); margin-top: 3px; }
-  .step .tag { position: absolute; top: 14px; right: 14px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; border-radius: 4px; display: none; }
-  .step.here { border: 2px solid var(--accent); background: var(--accent-soft); padding: calc(var(--pad) - 1px); }
-  .step.here .tag.here { display: block; background: var(--accent); color: var(--accent-ink); }
-  .step.next .tag.next { display: block; background: var(--calm-soft); color: var(--calm); }
-
-  /* If something happens */
-  .stuck { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--gap); }
-  .tile { background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px var(--pad); display: grid; gap: 10px; align-content: start; min-width: 0; }
-  .tile .sit { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 16px; }
-  .tile .sit svg.i { color: var(--calm); }
-  .tile p { color: var(--ink-2); font-size: 14.5px; }
+  /* The phrase you type, with a copy button */
+  .cmds { display: grid; gap: 8px; }
+  .cmd { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .cmd code { background: var(--code-bg); border: 1px solid var(--code-border); border-radius: 6px; padding: 4px 8px; color: var(--fg); }
+  .cmd .note { font-size: 13px; color: var(--muted); }
+  .copy { font: inherit; font-size: 12px; font-weight: 600; color: var(--btn-fg); background: var(--btn); border: 0; border-radius: 6px; padding: 4px 9px; cursor: pointer; flex: none; }
+  .copy:hover { opacity: .85; }
+  .copy.done { background: var(--ok); }
+  .plain { color: var(--muted); font-size: 14px; }
 
   /* Where to look */
-  .look { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--gap); }
-  .look a { display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start; background: var(--bg-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px var(--pad); }
-  .look a:hover { text-decoration: none; border-color: var(--ink-3); }
-  .look svg.i { color: var(--accent); width: 26px; height: 26px; }
-  .look b { display: block; font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 1.1; margin-bottom: 4px; }
-  .look code { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-2); }
-  .look p { color: var(--ink-2); font-size: 14.5px; margin-top: 6px; }
+  .look td.want a { text-decoration: none; }
+  .look code { color: var(--muted); }
 
-  /* Folders */
-  .foot { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 20px; font-size: 14px; color: var(--ink-2); }
-  .foot .fr { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .foot code { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); background: var(--bg-raised); border: 1px solid var(--line); padding: 2px 7px; border-radius: 5px; }
-  .foot svg.i { width: 18px; height: 18px; color: var(--ink-3); }
+  .foot { color: var(--muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 14px; }
+  .foot a { color: var(--fg); }
 
-  @media (max-width: 600px) {
-    .places { margin-left: 0; width: 100%; }
-    .head { padding-top: 28px; }
+  /* Narrow: every row becomes one card, cells stack with the same left edge */
+  @media (max-width: 720px) {
+    .top nav { display: none; }
+    .top .links { margin-left: 0; }
+    table, tbody, tr, td { display: block; }
+    thead, colgroup { display: none; }
+    tr { border-top: 1px solid var(--border); padding: 6px 0; }
+    tr:first-child { border-top: 0; }
+    td { border-top: 0; padding: 6px var(--pad); }
+    td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 4px; }
+    col { display: none; }
   }
-  @media print {
-    .bar { position: static; backdrop-filter: none; }
-    .step, .tile { break-inside: avoid; }
-  }
+  @media print { .top { position: static; } .find, .copy { display: none; } }
 </style>
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-start" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z"/></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1.5 1.5"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1.5-1.5"/></symbol>
-  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1L18.5 8.5a2.1 2.1 0 0 0-3-3L5 16z"/><path d="M13.5 6.5l3 3"/></symbol>
-  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
-  <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="M8 11l4 4 4-4"/><path d="M4 17v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-2"/></symbol>
-  <symbol id="i-build" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="5" rx="1"/><rect x="4" y="11" width="16" height="5" rx="1"/><path d="M4 20h16"/></symbol>
-  <symbol id="i-motion" viewBox="0 0 24 24"><path d="M3 8h9a3 3 0 1 0-3-3"/><path d="M3 12h14a3 3 0 1 1-3 3"/><path d="M3 16h7"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></symbol>
-  <symbol id="i-ship" viewBox="0 0 24 24"><path d="M5 19L19 5"/><path d="M9 5h10v10"/></symbol>
-  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="3"/></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol>
-  <symbol id="i-board" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></symbol>
-  <symbol id="i-window" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></symbol>
-  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l9.5 16.5H2.5z"/><path d="M12 10v4"/><path d="M12 17.5h.01"/></symbol>
-  <symbol id="i-mismatch" viewBox="0 0 24 24"><rect x="3" y="3" width="12" height="12" rx="1.5"/><rect x="9" y="9" width="12" height="12" rx="1.5"/></symbol>
-  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h12l-3-3"/><path d="M20 16H8l3 3"/></symbol>
-  <symbol id="i-question" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7"/><path d="M12 17h.01"/></symbol>
-  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="M11 11l9-9M16 6l2 2M13 9l2 2"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
-  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
-  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h13"/></symbol>
-</svg>
-
-<nav class="bar" aria-label="Always">
+<header class="top">
   <div class="in">
-    <span class="k"><span class="pill">/help</span> unsure what to do? Claude tells you where you are and what to say next.</span>
-    <div class="places">
-      <a class="place" href="http://localhost:4321" target="_blank" rel="noopener"><svg class="i"><use href="#i-window"/></svg>Preview</a>
-      <a class="place" href="http://localhost:4321/board" target="_blank" rel="noopener"><svg class="i"><use href="#i-board"/></svg>Board</a>
+    <strong>Kit reference</strong>
+    <nav><a href="#start">Start</a><a href="#work">The work</a><a href="#problems">Problems</a><a href="#look">Where to look</a></nav>
+    <div class="links">
+      <a href="http://localhost:4321" target="_blank" rel="noopener">Preview ↗</a>
+      <a href="http://localhost:4321/board" target="_blank" rel="noopener">Board ↗</a>
     </div>
   </div>
-</nav>
+</header>
 
-<div class="wrap">
-  <header class="head">
-    <p class="eyebrow">AISTUDIOS Landing Kit · guide · keep this tab open</p>
-    <h1>How to work with the kit</h1>
-    <p>You work in a chat with Claude. You say what you want, in plain words, and Claude does the building. When it needs a decision, it asks you with <b>clickable options</b> — click one. To see the result, look at the <b>preview</b> (the page) and the <b>board</b> (your project). If you're ever unsure what to do, type <b>/help</b>.</p>
-  </header>
+<main>
+  <div>
+    <h1>What to type, and what happens</h1>
+    <p class="lead">Keep this open while you work. Find the line, copy the phrase, paste it into the chat with Claude. When Claude asks a question with options, click one.</p>
+    <input class="find" id="find" type="search" placeholder="Find… login, figma, undo, motion" aria-label="Find a line">
+  </div>
 
-  <section id="sit">
-    <div class="sh"><h2>Every time you sit down</h2></div>
-    <div class="panel">
-      <ol>
-        <li><span class="n">1</span><p>Open the <b>Claude</b> app → <b>Code</b> → open your project folder.</p></li>
-        <li><span class="n">2</span><p>Set the permission mode to <b>Auto</b> — the selector at the bottom of the chat.</p></li>
-        <li><span class="n">3</span><p>Type <span class="pill">/help</span> — Claude says where the project is and what to say next. <b>New project?</b> Type <span class="pill">/start</span> instead and choose <span class="quote">New landing page from a brief</span>.</p></li>
-      </ol>
+  <section id="start">
+    <h2>Starting, or coming back</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><span>Open the <b>Claude</b> app → <b>Code</b> → open your project folder.</span></li>
+      <li><span class="n">2</span><span>Set the permission mode to <b>Auto</b> (the selector at the bottom of the chat).</span></li>
+      <li><span class="n">3</span><span class="cmds"><span class="cmd"><code>/help</code><button class="copy" type="button" data-copy="/help">Copy</button><span class="note">Claude says where the project is and what to say next.</span></span><span class="cmd"><code>/start</code><button class="copy" type="button" data-copy="/start">Copy</button><span class="note">New project — then choose “New landing page from a brief”.</span></span></span></li>
+    </ol>
+  </section>
+
+  <section id="work">
+    <h2>The work, in order</h2>
+    <div class="tbl">
+      <table>
+        <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+        <thead><tr><th>You want to…</th><th>Type this</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr data-keywords="begin new landing brief questionnaire">
+            <td class="want" data-label="You want to">Start a new project</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>/start</code><button class="copy" type="button" data-copy="/start">Copy</button><span class="note">then choose “New landing page from a brief”</span></div></div></td>
+            <td class="then" data-label="What happens">Claude asks about the client, then the site — sections, navigation, hero, motion. <b>Click the options.</b> Then the preview and the board open in your browser.</td>
+          </tr>
+          <tr data-keywords="inspiration reference url link website example">
+            <td class="want" data-label="You want to">Use a site you love as the reference</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>https://www.lassie.ai/</code><button class="copy" type="button" data-copy="https://www.lassie.ai/">Copy</button><span class="note">paste any address, and say what you like about it</span></div></div></td>
+            <td class="then" data-label="What happens">Claude studies its layout, type, colour and motion. The site questions come pre-filled from it.</td>
+          </tr>
+          <tr data-keywords="draft figma design">
+            <td class="want" data-label="You want to">Get a first design in Figma</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>design it</code><button class="copy" type="button" data-copy="design it">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Claude drafts the site in Figma — frames, colours, type, real copy. Open Figma. <b>It's a draft.</b></td>
+          </tr>
+          <tr data-keywords="refine figma export png frames">
+            <td class="want" data-label="You want to">Make the design yours</td>
+            <td data-label="Type this"><span class="plain">Nothing to type — work in Figma. Refine, don't rebuild.</span></td>
+            <td class="then" data-label="What happens">When you're happy, export each section frame as a PNG into the folder <code>brief/figma/</code> in your project.</td>
+          </tr>
+          <tr data-keywords="import figma tokens colours colors fonts">
+            <td class="want" data-label="You want to">Bring your Figma into the kit</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>import</code><button class="copy" type="button" data-copy="import">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Colours, fonts, spacing and the list of sections are read from your Figma and PNGs. Check them on the board.</td>
+          </tr>
+          <tr data-keywords="build hero section">
+            <td class="want" data-label="You want to">Build the next section</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>next</code><button class="copy" type="button" data-copy="next">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">One section is built. On the board: screenshots next to your frame — desktop, tablet, phone. <b>Look.</b></td>
+          </tr>
+          <tr data-keywords="fix wrong change adjust">
+            <td class="want" data-label="You want to">Fix something that's off</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>the title is too small</code><button class="copy" type="button" data-copy="the title is too small">Copy</button></div><div class="cmd"><code>more space above the photo</code><button class="copy" type="button" data-copy="more space above the photo">Copy</button><span class="note">say exactly what you see, in your words</span></div></div></td>
+            <td class="then" data-label="What happens">Claude fixes it and shows new screenshots. When it matches, type <code>next</code>.</td>
+          </tr>
+          <tr data-keywords="animate animation motion effects parallax reveal">
+            <td class="want" data-label="You want to">Add motion</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>animate</code><button class="copy" type="button" data-copy="animate">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">A list of effects as options — reveals, parallax, the pinned section. Untick what you don't want. Then scroll the preview.</td>
+          </tr>
+          <tr data-keywords="animation motion speed slower faster less more">
+            <td class="want" data-label="You want to">Adjust the motion</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>slower</code><button class="copy" type="button" data-copy="slower">Copy</button></div><div class="cmd"><code>less</code><button class="copy" type="button" data-copy="less">Copy</button></div><div class="cmd"><code>hold it longer</code><button class="copy" type="button" data-copy="hold it longer">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Claude adjusts and takes new scroll screenshots for the board.</td>
+          </tr>
+          <tr data-keywords="review qa check mobile accessibility">
+            <td class="want" data-label="You want to">Check everything before sending</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>review</code><button class="copy" type="button" data-copy="review">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Phone, tablet, accessibility, speed, links. Claude fixes what it can and asks the rest with options.</td>
+          </tr>
+          <tr data-keywords="ship publish deploy vercel login link url preview">
+            <td class="want" data-label="You want to">Put it online with a link to share</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>ship</code><button class="copy" type="button" data-copy="ship">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">You get a preview link. <b>First time:</b> the browser asks you to log in to Vercel — use your own account — then type <code>done</code>.</td>
+          </tr>
+          <tr data-keywords="go live production publish domain">
+            <td class="want" data-label="You want to">Publish to the real address</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>go live</code><button class="copy" type="button" data-copy="go live">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">The page goes live. Claude handles everything underneath.</td>
+          </tr>
+          <tr data-keywords="help status lost where">
+            <td class="want" data-label="You want to">Know where you are</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>/help</code><button class="copy" type="button" data-copy="/help">Copy</button></div><div class="cmd"><code>status?</code><button class="copy" type="button" data-copy="status?">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">What's built, what's next, and what to say to continue.</td>
+          </tr>
+          <tr data-keywords="undo revert back save point version">
+            <td class="want" data-label="You want to">Go back to how it was before</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>undo</code><button class="copy" type="button" data-copy="undo">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Back to the last save point. Nothing is ever lost — the save points are on the board.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <section id="steps-section">
-    <div class="sh"><h2>The work, step by step</h2><p>Tap the step you're on. The next one lights up, so you always know what comes next.</p></div>
-    <div class="steps" id="steps">
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">01</span><svg class="i"><use href="#i-start"/></svg><h3>Answer the questions</h3></div>
-        <p>After <b>/start</b>, Claude asks about the client, then about the site: sections, navigation, type of hero, how much motion.</p>
-        <p><b>Click the options.</b> Keep typed answers short.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>Claude sets up the project. The preview and the board open in your browser.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">02</span><svg class="i"><use href="#i-link"/></svg><h3>Give it a reference</h3></div>
-        <p><b>Paste the address of a site you love</b> into the chat, and say what you love about it.</p>
-        <p>Claude studies its layout, type, colour, media and motion.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>The site questions come pre-filled from that reference. Change whatever you want.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">03</span><svg class="i"><use href="#i-pen"/></svg><h3>Get the first design</h3></div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">design it</span></div>
-        <p>Claude drafts the whole site in Figma — frames, colours, type, real copy — from your answers and the reference.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>Open Figma. What you see is a draft, not a decision.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">04</span><svg class="i"><use href="#i-sliders"/></svg><h3>Make it yours in Figma</h3></div>
-        <p><b>Refine the draft</b> as you would for any client: type, spacing, images, copy. Don't rebuild it from zero — direct it.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>When you're happy, export each section frame as a PNG into the folder <span class="quote">brief/figma/</span> inside your project.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">05</span><svg class="i"><use href="#i-import"/></svg><h3>Bring it into the kit</h3></div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">import</span></div>
-        <p>Claude reads your refined Figma and your PNGs: colours, fonts, spacing, the list of sections.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>On the board: your colours and fonts as swatches, your sections listed in order.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">06</span><svg class="i"><use href="#i-build"/></svg><h3>Build, one section at a time</h3></div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">next</span></div>
-        <p>Claude builds one section and puts screenshots next to your frame on the board — desktop, tablet, phone.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p><b>Look.</b> If something's off, say exactly what: <span class="quote">the title is too small</span>, <span class="quote">more space above the photo</span>. When it matches, say <b>next</b> again.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">07</span><svg class="i"><use href="#i-motion"/></svg><h3>Add motion</h3></div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">animate</span></div>
-        <p>Claude proposes effects as a list of options — reveals, parallax, the pinned section. <b>Untick what you don't want.</b></p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>Scroll the preview. Tune with words: <span class="quote">slower</span>, <span class="quote">less</span>, <span class="quote">hold it longer</span>.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">08</span><svg class="i"><use href="#i-check"/></svg><h3>Check everything</h3></div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">review</span></div>
-        <p>Claude checks phone and tablet, accessibility, speed and links — and fixes what it can.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>What it can't decide alone, it asks you with options. Answer, and it finishes.</p></div>
-      </button>
-
-      <button class="step" type="button" aria-pressed="false">
-        <span class="tag here">you are here</span><span class="tag next">next</span>
-        <div class="top"><span class="n">09</span><svg class="i"><use href="#i-ship"/></svg><h3>Put it online</h3></div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">ship</span></div>
-        <p>Claude saves everything and puts the page online at a link you can send. The first time, the browser asks you to log in to Vercel: log in with your own account, come back, and tell Claude <b>done</b>.</p>
-        <div class="then"><svg class="i"><use href="#i-arrow"/></svg><p>When the client approves, tell Claude <span class="pill">go live</span> — the page goes to its real address.</p></div>
-      </button>
-
-    </div>
-  </section>
-
-  <section id="stuck">
-    <div class="sh"><h2>If something happens</h2><p>Describe what you see, in your own words. You never have to work out why.</p></div>
-    <div class="stuck">
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-window"/></svg>The preview is blank or won't load</div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">the preview is blank</span></div>
-        <p>Claude checks the preview and restarts it.</p>
-      </div>
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-alert"/></svg>An error appears in the chat</div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">something's wrong</span></div>
-        <p>You don't need to read the error. If Claude asks what you were doing, one line is enough.</p>
-      </div>
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-mismatch"/></svg>It doesn't look like my Figma</div>
-        <div class="tell"><span class="lbl">Tell Claude what's different</span><span class="pill">the heading breaks into three lines</span></div>
-        <p>Say it the way you'd tell a junior. Claude compares against your frame and fixes it.</p>
-      </div>
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-swap"/></svg>It changed something I didn't ask for</div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">you changed the footer — put it back</span></div>
-        <p>More than one thing? Say <b>undo</b>: back to the last save point. Nothing is ever lost.</p>
-      </div>
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-question"/></svg>It asks a technical question</div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">I don't know — choose the standard option and tell me in one line</span></div>
-        <p>Always allowed. You never have to understand the question.</p>
-      </div>
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-key"/></svg>It asks me to log in somewhere</div>
-        <div class="tell"><span class="lbl">Do this</span><span class="pill">log in with your own account, then tell Claude: done</span></div>
-        <p>Normal the first time — GitHub, Vercel, Figma. A browser window opens; log in; come back.</p>
-      </div>
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-clock"/></svg>It's been silent for a while</div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">status?</span></div>
-        <p>Building and screenshots take up to a minute. After three minutes of silence, ask.</p>
-      </div>
-      <div class="tile">
-        <div class="sit"><svg class="i"><use href="#i-compass"/></svg>I'm lost, or out of patience</div>
-        <div class="tell"><span class="lbl">Tell Claude</span><span class="pill">save everything and tell me where we are</span></div>
-        <p>Then take a break. When you come back, type <b>/help</b> and carry on from there.</p>
-      </div>
+  <section id="problems">
+    <h2>If something happens</h2>
+    <div class="tbl">
+      <table>
+        <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+        <thead><tr><th>What you see</th><th>Type this</th><th>What happens</th></tr></thead>
+        <tbody>
+          <tr data-keywords="blank white empty localhost preview broken">
+            <td class="want" data-label="What you see">The preview is blank or won't load</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>the preview is blank</code><button class="copy" type="button" data-copy="the preview is blank">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Claude checks the preview and restarts it.</td>
+          </tr>
+          <tr data-keywords="error red broken crash">
+            <td class="want" data-label="What you see">An error appears in the chat</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>something's wrong</code><button class="copy" type="button" data-copy="something's wrong">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">You don't need to read the error. If Claude asks what you were doing, one line is enough.</td>
+          </tr>
+          <tr data-keywords="figma match different mismatch design">
+            <td class="want" data-label="What you see">It doesn't look like my Figma</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>the heading breaks into three lines</code><button class="copy" type="button" data-copy="the heading breaks into three lines">Copy</button><span class="note">say what's different, the way you'd tell a junior</span></div></div></td>
+            <td class="then" data-label="What happens">Claude compares against your frame and fixes it.</td>
+          </tr>
+          <tr data-keywords="changed undo revert put back">
+            <td class="want" data-label="What you see">It changed something I didn't ask for</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>you changed the footer — put it back</code><button class="copy" type="button" data-copy="you changed the footer — put it back">Copy</button></div><div class="cmd"><code>undo</code><button class="copy" type="button" data-copy="undo">Copy</button><span class="note">if it's more than one thing</span></div></div></td>
+            <td class="then" data-label="What happens">It's put back. <code>undo</code> returns to the last save point.</td>
+          </tr>
+          <tr data-keywords="question technical option standard">
+            <td class="want" data-label="What you see">A technical question I don't understand</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>I don't know — choose the standard option and tell me in one line</code><button class="copy" type="button" data-copy="I don't know — choose the standard option and tell me in one line">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Always allowed. Claude picks the safe option and explains in one line.</td>
+          </tr>
+          <tr data-keywords="login log in password account github vercel figma browser sign in">
+            <td class="want" data-label="What you see">It asks me to log in somewhere</td>
+            <td data-label="Type this"><div class="cmds"><span class="plain">Log in in the browser with your own account, come back, then:</span><div class="cmd"><code>done</code><button class="copy" type="button" data-copy="done">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Normal the first time — GitHub, Vercel, Figma. Claude continues where it stopped.</td>
+          </tr>
+          <tr data-keywords="slow waiting silent stuck hanging status">
+            <td class="want" data-label="What you see">It's been silent for a while</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>status?</code><button class="copy" type="button" data-copy="status?">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Building and screenshots take up to a minute. After three minutes of silence, ask.</td>
+          </tr>
+          <tr data-keywords="lost stuck help save break">
+            <td class="want" data-label="What you see">I'm lost, or out of patience</td>
+            <td data-label="Type this"><div class="cmds"><div class="cmd"><code>save everything and tell me where we are</code><button class="copy" type="button" data-copy="save everything and tell me where we are">Copy</button></div></div></td>
+            <td class="then" data-label="What happens">Everything is saved. Take a break. Come back with <code>/help</code>.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
   <section id="look">
-    <div class="sh"><h2>Where to look</h2></div>
-    <div class="look">
-      <a href="http://localhost:4321" target="_blank" rel="noopener"><svg class="i"><use href="#i-window"/></svg><span><b>The preview</b><code>localhost:4321</code><p>The page, updating live as Claude builds. Scroll it like a visitor would.</p></span></a>
-      <a href="http://localhost:4321/board" target="_blank" rel="noopener"><svg class="i"><use href="#i-board"/></svg><span><b>The board</b><code>localhost:4321/board</code><p>Your project: the brief, each section with your Figma frame next to the screenshots, colours and fonts, the review, the links, the save points. Only on your computer — never published.</p></span></a>
+    <h2>Where to look</h2>
+    <div class="tbl look">
+      <table>
+        <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+        <tbody>
+          <tr>
+            <td class="want" data-label="Place"><a href="http://localhost:4321" target="_blank" rel="noopener">Preview ↗</a></td>
+            <td data-label="Address"><code>localhost:4321</code></td>
+            <td class="then" data-label="What it is">The page, updating live as Claude builds. Scroll it like a visitor.</td>
+          </tr>
+          <tr>
+            <td class="want" data-label="Place"><a href="http://localhost:4321/board" target="_blank" rel="noopener">Board ↗</a></td>
+            <td data-label="Address"><code>localhost:4321/board</code></td>
+            <td class="then" data-label="What it is">Your project: the brief, each section with your Figma frame next to the screenshots, colours and fonts, the review, the links, the save points. Only on your computer.</td>
+          </tr>
+          <tr>
+            <td class="want" data-label="Place">Your frames</td>
+            <td data-label="Folder"><code>brief/figma/</code></td>
+            <td class="then" data-label="What it is">Section frames exported from Figma as PNG. Claude compares the build against these.</td>
+          </tr>
+          <tr>
+            <td class="want" data-label="Place">Images and logos</td>
+            <td data-label="Folder"><code>src/assets/</code></td>
+            <td class="then" data-label="What it is">Exported from Figma. Videos go in <code>public/video/</code>.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <section>
-    <div class="foot">
-      <div class="fr"><svg class="i"><use href="#i-folder"/></svg><code>brief/figma/</code> your section frames, exported as PNG</div>
-      <div class="fr"><svg class="i"><use href="#i-folder"/></svg><code>src/assets/</code> images and logos exported from Figma</div>
-      <div class="fr"><svg class="i"><use href="#i-folder"/></svg><code>public/video/</code> videos</div>
-      <div class="fr"><svg class="i"><use href="#i-book"/></svg><a href="HANDBOOK.html">HANDBOOK.html</a> — the ideas behind all this, when you're curious</div>
-    </div>
-  </section>
-</div>
+  <p class="foot">The ideas behind all this, when you're curious: <a href="HANDBOOK.html">HANDBOOK.html</a></p>
+</main>
 
 <script>
-  // "You are here": one step marked per browser; the following step shows "next".
   (function () {
-    var KEY = 'aistudios-guide-here';
-    var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
-    function read() { try { var v = localStorage.getItem(KEY); return v === null ? -1 : parseInt(v, 10); } catch (e) { return -1; } }
-    function write(i) { try { if (i < 0) localStorage.removeItem(KEY); else localStorage.setItem(KEY, String(i)); } catch (e) {} }
-    function paint(i) {
-      steps.forEach(function (el, k) {
-        el.classList.toggle('here', k === i);
-        el.classList.toggle('next', i >= 0 && k === i + 1);
-        el.setAttribute('aria-pressed', k === i ? 'true' : 'false');
-      });
+    // Copy the phrase next to the button. Clipboard API first; hidden textarea as fallback.
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
     }
-    steps.forEach(function (el, k) {
-      el.addEventListener('click', function () { var cur = read(); var n = cur === k ? -1 : k; write(n); paint(n); });
+    function copied(btn) {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1500);
+    }
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.copy'); if (!btn) return;
+      var text = btn.getAttribute('data-copy');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { copied(btn); }, function () { fallbackCopy(text); copied(btn); });
+      } else { fallbackCopy(text); copied(btn); }
     });
-    paint(read());
+
+    // Find: hide rows that don't mention the query. Spaces are ignored so "login" finds "log in".
+    var find = document.getElementById('find');
+    var rows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+    function squash(s) { return s.toLowerCase().replace(/\s+/g, ''); }
+    rows.forEach(function (tr) { tr.setAttribute('data-text', squash(tr.textContent + ' ' + (tr.getAttribute('data-keywords') || ''))); });
+    find.addEventListener('input', function () {
+      var q = squash(find.value);
+      rows.forEach(function (tr) { tr.hidden = q !== '' && tr.getAttribute('data-text').indexOf(q) === -1; });
+    });
   })();
 </script>
 
