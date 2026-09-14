@@ -1,6 +1,6 @@
 ---
 name: design
-description: Draft the landing page design in Figma from the brief, the architecture answers and the inspiration — variables (tokens), page frames at 1440 and 390, one section frame per section with layout, real copy and placeholder media — for the designer to refine. Uses the Figma MCP write tools; falls back to SVG the designer pastes into Figma. Use when the designer says "design it", "make the Figma", "draft the design", "start designing".
+description: Draft the landing page design in Figma from the brief, the architecture answers and the inspiration — variables (tokens), page frames at 1440 and 390, one section frame per section with layout, real copy and placeholder media — for the designer to refine. Uses the Figma MCP write tools; falls back to SVG the designer pastes into Figma. Runs on its own at the end of new-landing when there is no finished Figma; also when the designer says "design it", "make the Figma", "draft the design", "start designing", or wants the draft redone.
 argument-hint: [section]
 ---
 

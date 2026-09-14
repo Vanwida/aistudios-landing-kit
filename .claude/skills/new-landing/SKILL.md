@@ -80,4 +80,6 @@ If GitHub truly can't be done now (no account, IT block): say so in one line, wr
 Two lines:
 
 > "Brief done and the project is running. **Preview:** http://localhost:4321 · **Board:** http://localhost:4321/board — the board shows everything we decided and fills up as we go.
-> Next: say **design it** and I'll draft the Figma from what we just decided." *(or, if they have a finished Figma: "say **import** and I'll bring the design in.")*
+> Now I'll draft the Figma from what we just decided — give me a couple of minutes." *(or, if they have a finished Figma: "Next: say **import** and I'll bring the design in.")*
+
+Then, **without waiting for anything**, run the `design` skill — unless the design source is a finished Figma, in which case stop here. The designer already answered every question the draft needs; asking them to say "design it" is a dead step. ("design it" still works later, to redo or extend the draft.)

@@ -17,7 +17,7 @@ One question, four options, then hand over to the right skill. Never a paragraph
 
 "Where do you want to begin?"
 
-1. **New landing page from a brief** *(recommended)* → run `new-landing` (questionnaire → references → architecture → setup → then `design`).
+1. **New landing page from a brief** *(recommended)* → run `new-landing` (questionnaire → references → architecture → setup → then `design` runs on its own: the Figma draft appears without the designer asking).
 2. **I have a finished Figma design** → run `new-landing` Round 1 only (5 quick questions), then `figma` import, then `build`.
 3. **I have a reference site I love** → ask for the URL (open text), run `inspire`, then `new-landing` Round 2 pre-filled from it.
 4. **Just show me around** → say in four lines what the preview and the board are, that they talk in plain words, and that `/help` always shows what's next. Then offer option 1.
