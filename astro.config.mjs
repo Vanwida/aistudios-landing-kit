@@ -10,7 +10,7 @@ export default defineConfig({
   // Example: site: 'https://www.client-domain.com'
   site: 'https://example.com',
 
-  // Astro 7 defaults to 'jsx' whitespace compression, which removes spaces
+  // Astro defaults to 'jsx' whitespace compression, which removes spaces
   // between inline elements (<strong>Hi</strong> there -> "Hithere").
   // Keep classic behaviour so text always reads as written.
   compressHTML: true,

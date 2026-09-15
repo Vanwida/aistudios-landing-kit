@@ -21,7 +21,7 @@ Never ask for error text, logs or file names. You can get those yourself.
 In this order, stop as soon as you find the cause:
 
 1. Dev server: `curl -s -o /dev/null -w "%{http_code}" http://localhost:4321`. Not 200 → check if it's running (`lsof -i :4321`); start it (`npm run dev` in background) or read its output for the error.
-2. Build: `npm run build` — the compiler error usually names the file and line. Common: an unclosed tag (Astro 7 is strict), invalid nesting, a missing import, a typo in a path, an asset that isn't there.
+2. Build: `npm run build` — the compiler error usually names the file and line. Common: an unclosed tag (the Astro compiler is strict), invalid nesting, a missing import, a typo in a path, an asset that isn't there.
 3. Screenshots: `npm run shots -- --section <id>` and **look**. The script prints console errors too.
 4. Recent changes: `git diff` and `git log --oneline -5` — what changed since the last save point?
 5. Motion not playing: is `prefersReducedMotion` on in the OS? Does the element still have `[data-reveal]` but no `.js` class on `<html>` (script not loaded)? ScrollTrigger start positions off after images loaded (`ScrollTrigger.refresh()`)?

@@ -1,6 +1,6 @@
 ---
 name: astro-conventions
-description: Project conventions for this Astro 7 landing kit — folder structure, the section component pattern, design tokens and CSS rules, images and video, fonts, header/footer slots, scripts, and the optional Figma-proportional scaling mode. Load before writing or editing any .astro, .css or script file.
+description: Project conventions for this Astro landing kit — folder structure, the section component pattern, design tokens and CSS rules, images and video, fonts, header/footer slots, scripts, and the optional Figma-proportional scaling mode. Load before writing or editing any .astro, .css or script file.
 ---
 
 # Astro conventions for the Landing Kit

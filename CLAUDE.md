@@ -50,7 +50,7 @@ The designer **talks**; you map what they say to a phase and run its skill. Slas
 
 ## The stack (fixed — do not propose alternatives)
 
-- **Astro 7**, static output. One page = `src/pages/index.astro`, which only lists sections.
+- **Astro** (always the current version), static output. One page = `src/pages/index.astro`, which only lists sections.
 - **One section = one file** in `src/sections/<Name>.astro`, following `src/sections/_Example.astro` exactly (semantic HTML → scoped `<style>` → optional `<script>`).
 - **Plain CSS with design tokens.** Every colour, font, size, space, radius comes from `src/styles/tokens.css`. No hard-coded values in sections. No Tailwind, no CSS-in-JS, no UI libraries.
 - **Motion: GSAP + ScrollTrigger + Lenis**, wired in `src/scripts/motion.js`. `[data-reveal]` gives entrance reveals for free. **Three.js only** when the brief explicitly asks for 3D and the motion-designer agent confirms it's worth it.
