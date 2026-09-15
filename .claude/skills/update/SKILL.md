@@ -17,7 +17,7 @@ Explain it once, in Figma terms: "It's like a design-system library update: the 
 3. Read the first line, `RESULT:`, and respond:
    - **UPDATED** — say the version change and the number of files in one sentence. If anything under `src/board/`, `src/scripts/`, `scripts/` or `.claude/` changed, restart the dev server (`npm run dev` in the background) so the board and motion pick it up, and tell them the skills are reloaded when they start a new conversation. Repeat any `NOTE:` lines in plain words.
    - **UP_TO_DATE** — "Already on the latest version (1.2.0)."
-   - **NO_ACCESS** — "The kit's home on GitHub didn't let us in. Ask AISTUDIOS to give your GitHub account access to the kit, then say *update the kit* again." Nothing was changed.
+   - **NO_ACCESS** — "GitHub didn't let us in. The kit is public, so this is almost always the login: say *fix* and I'll check it." Nothing was changed.
    - **NETWORK** — "GitHub couldn't be reached right now. Let's try again in a minute." Nothing was changed. (The script already retried three times.)
    - **NOT_A_REPO** — the project hasn't been set up yet; run `new-landing` first.
 4. End with what they'll see and what's next: "Nothing on the page changed. Carry on where you were — say *next* / *animate* / *ship*."

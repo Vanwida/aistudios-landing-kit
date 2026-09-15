@@ -4,6 +4,13 @@
   "private": true,
   "type": "module",
   "description": "AISTUDIOS Landing Kit — Astro starter for designers building landing pages with Claude Code",
+  "license": "MIT",
+  "author": "Alex Solé",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vanwida/aistudios-landing-kit.git"
+  },
+  "homepage": "https://github.com/Vanwida/aistudios-landing-kit",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

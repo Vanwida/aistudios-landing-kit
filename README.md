@@ -22,7 +22,7 @@ You are in an empty folder and the designer pasted the sentence above. Do this, 
 5. `git clone https://github.com/<owner>/<name>.git .` (into this folder). Then `git checkout -b draft`.
 6. Say: "The kit is in. **Start a new conversation** so I can load it, then type **/start**." Stop.
 
-If `gh repo create` fails with a permission error, the designer's GitHub account has no access to the kit: "Ask AISTUDIOS to give your GitHub account access to the kit, then paste the sentence again." 
+If `gh repo create` fails, it is almost always the GitHub login: run `gh auth status`, and if needed `gh auth login --web --git-protocol https`, then try again. 
 
 Two places to look while you work:
 
@@ -68,6 +68,14 @@ Node.js 22 (nodejs.org → LTS) · Git (macOS installs it on first use) · GitHu
 **`GUIDE.html`** — double-click it and leave the tab open while you work: what to type for each step, what to type when something happens, with a copy button on every phrase.
 
 New version of the kit? Tell Claude **update the kit**. Your design, sections and brief stay as they are.
+
+## Licence
+
+MIT. Use it, change it, use it for client work, ship it. The only condition is that the copyright notice stays in the copy (it is the `LICENSE` file — leave it there).
+
+The kit is the system. **What you build with it is yours**: your sections, your tokens, your copy, your images, your client's site. Nothing you make is covered by this licence.
+
+The kit keeps improving. Say **update the kit** in any project to pull the current system files, or start a new project and you get the latest automatically.
 
 ## Read this next
 
