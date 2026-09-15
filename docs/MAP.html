@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landing kit — the map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#f2f3f5; --surface:#fff; --ink:#0b0d14; --ink-2:#4a4f5c; --ink-3:#6b7080;
+    --hairline:rgba(11,13,20,.08); --line:rgba(11,13,20,.14); --action:#1b2cff; --action-soft:rgba(27,44,255,.07);
+    --ui:"Archivo",system-ui,-apple-system,sans-serif; --mono:"Martian Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font:400 16px/1.5 var(--ui);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1560px;margin:0 auto;padding:40px 32px 96px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand svg{width:34px;height:34px;color:var(--action)}
+  h1{font:700 34px/1 var(--ui);font-stretch:108%;letter-spacing:-.03em;margin:0}
+  header p{margin:6px 0 0;color:var(--ink-2);max-width:62ch}
+  .meta{font:500 13px/1.4 var(--mono);color:var(--ink-3);text-align:right}
+  h2{font:700 13px/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:44px 0 16px}
+  h2:first-of-type{margin-top:0}
+  h3{font:600 17px/1.25 var(--ui);letter-spacing:-.01em;margin:0 0 6px}
+  p{margin:0}
+  ul{list-style:none;margin:0;padding:0}
+  .card,.node,.doors li,.grid li{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;padding:16px 18px}
+  .doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .doors p{color:var(--ink-2);font-size:14.5px;margin-top:6px}
+  .rail{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:26px;position:relative}
+  .node{position:relative;display:flex;flex-direction:column;gap:6px}
+  .node:not(:last-child)::after{content:"";position:absolute;right:-20px;top:34px;width:14px;height:14px;border:2px solid var(--line);border-width:2px 2px 0 0;transform:rotate(45deg)}
+  .step{position:absolute;top:-10px;left:16px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--action);color:#fff;font:600 12px/1 var(--ui)}
+  .node h3{margin-top:6px}
+  .sk{font:500 12px/1 var(--mono);color:var(--action)}
+  .say{color:var(--ink-2);font-size:14px}
+  .writes{margin-top:auto;padding-top:8px;display:flex;flex-wrap:wrap;gap:4px}
+  .chip{display:inline-block;max-width:100%;font:500 11.5px/1.5 var(--mono);background:var(--ground);border:1px solid var(--hairline);border-radius:5px;padding:2px 6px;color:var(--ink-2);overflow-wrap:anywhere}
+  .chip.file{background:var(--action-soft);border-color:transparent;color:var(--action)}
+  .loop{margin-top:14px;font-size:14px;color:var(--ink-2);display:flex;gap:22px;flex-wrap:wrap}
+  .loop b{color:var(--ink);font-weight:600}
+  .grid{display:grid;gap:14px}
+  .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .grid.seven{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .grid li p{color:var(--ink-2);font-size:14px}
+  .split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .split section{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;padding:18px 20px}
+  .split h3 span{font:500 12px/1 var(--mono);color:var(--ink-3);margin-left:8px}
+  .files{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+  .menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .menu ol{margin:10px 0 0;padding-left:20px}
+  .menu li{margin-bottom:8px;font-size:14.5px}
+  .menu li span{color:var(--ink-2)}
+  .menu li em{font-style:normal;font:500 11px/1 var(--mono);color:var(--action);margin-left:6px}
+  footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--hairline);color:var(--ink-3);font-size:13.5px}
+  @media (max-width:1200px){.rail{grid-template-columns:repeat(4,minmax(0,1fr));row-gap:34px}.node:nth-child(4)::after{display:none}.doors,.grid.four,.grid.seven{grid-template-columns:repeat(2,minmax(0,1fr))}.split,.menu{grid-template-columns:1fr}}
+  @media (max-width:640px){.rail,.doors,.grid.four,.grid.seven{grid-template-columns:1fr}.node::after{display:none}}
+  @media print{body{background:#fff}.wrap{max-width:none;padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="brand"><svg viewBox="0 -2 100 90" aria-hidden="true"><path fill="currentColor" d="M47 14.13 A36 36 0 1 0 47 85.87 Z M53 0.13 A36 36 0 1 1 53 71.87 Z"/></svg><h1>Landing kit — the map</h1></div>
+      <p>Everything the designer can say, where it leads, and what it writes. The kit is a conversation: they talk, Claude runs the matching skill.</p>
+    </div>
+    <p class="meta">AISTUDIOS Landing Kit<br>v1.2.0 · Vanwida/aistudios-landing-kit<br>MIT</p>
+  </header>
+
+  <h2>Three doors in</h2>
+  <ul class="doors">
+    <li><h3>New project</h3><p>An empty folder named after the client, opened in Claude.</p><p style="margin-top:10px"><code class="chip ">Create a new landing from the AISTUDIOS kit: Vanwida/aistudios-landing-kit</code></p><p>Claude makes their repo from the template and clones it. Always the current version.</p></li>
+    <li><h3>A copy of the folder</h3><p>The kit as a zip, or a folder they already have.</p><p style="margin-top:10px"><code class="chip ">update the kit</code></p><p>Unzip, rename after the client, open it. Say this to pull the current system files.</p></li>
+    <li><h3>A project already going</h3><p>Yesterday’s project, reopened.</p><p style="margin-top:10px"><code class="chip ">/start</code></p><p>Reads what is built and offers the next step.</p></li>
+  </ul>
+
+  <h2>Then the front door: <code class="chip">/start</code></h2>
+  <div class="menu">
+    <section class="card"><h3>Nothing built yet</h3><ol><li><b>New landing page from a brief</b><em>recommended</em><br><span>Questionnaire, references, architecture, setup. Then the Figma draft appears on its own.</span></li><li><b>I have a finished Figma design</b><br><span>Five quick questions, then import, then build.</span></li><li><b>I have a reference site I love</b><br><span>Asks for the URL, reads the site, pre-fills the architecture round.</span></li><li><b>Just show me around</b><br><span>Four lines about the preview and the board, then offers the first option.</span></li></ol></section>
+    <section class="card"><h3>A project already going</h3><ol><li><b>Continue where we left off</b><em>recommended</em><br><span>Whatever is missing: import, build, motion, review or ship.</span></li><li><b>Show me the board</b><br><span>Opens localhost:4321/board.</span></li><li><b>Something’s wrong</b><br><span>Runs fix.</span></li><li><b>Start a different project</b><br><span>Explains: copy the folder, open the copy, say start.</span></li></ol></section>
+  </div>
+
+  <h2>The line — what they say, what it writes</h2>
+  <ul class="rail">
+      <li class="node">
+        <span class="step">1</span>
+        <h3>Brief</h3>
+        <p class="sk">new-landing</p>
+        <p class="say">“start” · “new project” · “new landing”</p>
+        <p class="writes"><code class="chip file">brief/PROJECT.md</code><code class="chip file">brief/DESIGN.md</code><code class="chip file">brief/sections.json</code></p>
+      </li>
+      <li class="node">
+        <span class="step">2</span>
+        <h3>Inspiration</h3>
+        <p class="sk">inspire</p>
+        <p class="say">“like this site” · “a URL”</p>
+        <p class="writes"><code class="chip file">brief/DESIGN.md</code><code class="chip file">brief/inspiration/</code></p>
+      </li>
+      <li class="node">
+        <span class="step">3</span>
+        <h3>Figma draft</h3>
+        <p class="sk">design</p>
+        <p class="say">“design it” · “make the Figma” · “draft the design”</p>
+        <p class="writes"><code class="chip file">Figma file</code><code class="chip file">brief/sections.json</code></p>
+      </li>
+      <li class="node">
+        <span class="step">4</span>
+        <h3>Import</h3>
+        <p class="sk">figma</p>
+        <p class="say">“import the design” · “a Figma link”</p>
+        <p class="writes"><code class="chip file">src/styles/tokens.css</code><code class="chip file">brief/DESIGN.md</code><code class="chip file">brief/sections.json</code></p>
+      </li>
+      <li class="node">
+        <span class="step">5</span>
+        <h3>Build</h3>
+        <p class="sk">build</p>
+        <p class="say">“build” · “next” · “make the hero”</p>
+        <p class="writes"><code class="chip file">src/sections/&lt;Name&gt;.astro</code><code class="chip file">brief/sections.json</code><code class="chip file">brief/shots/</code></p>
+      </li>
+      <li class="node">
+        <span class="step">6</span>
+        <h3>Motion</h3>
+        <p class="sk">animate</p>
+        <p class="say">“animate” · “add motion” · “make it move”</p>
+        <p class="writes"><code class="chip file">section files</code></p>
+      </li>
+      <li class="node">
+        <span class="step">7</span>
+        <h3>Review</h3>
+        <p class="sk">review</p>
+        <p class="say">“review” · “check everything” · “is it ready”</p>
+        <p class="writes"><code class="chip file">brief/REVIEW.md</code></p>
+      </li>
+      <li class="node">
+        <span class="step">8</span>
+        <h3>Ship</h3>
+        <p class="sk">ship</p>
+        <p class="say">“ship” · “publish” · “send the client a link” · “go live”</p>
+        <p class="writes"><code class="chip file">brief/HANDOFF.md</code></p>
+      </li>
+  </ul>
+  <p class="loop"><b>Build repeats</b> once per section until the list is done. <b>Motion</b> comes after the last section, never before. <b>Ship</b> can run at any point: every push is a preview link, “go live” is the real address.</p>
+
+  <h2>Any time, at any point on the line</h2>
+  <ul class="grid four">
+      <li>
+        <h3>start</h3>
+        <p class="say">“Where do you want to begin?” · “start” · “begin” · “hello”</p>
+        <p>The front door. Shows "Where do you want to begin?" as clickable options — new project, I have a finished Figma, I have…</p>
+      </li>
+      <li>
+        <h3>help</h3>
+        <p class="say">“help” · “what now” · “what's next” · “where were we”</p>
+        <p>Where am I and what's next — reads the project state, says it in three lines, and offers the next actions as clickable…</p>
+      </li>
+      <li>
+        <h3>status</h3>
+        <p class="say">“where were we” · “status”</p>
+        <p>Five lines: built, next, open items, links.</p>
+      </li>
+      <li>
+        <h3>fix</h3>
+        <p class="say">“broken” · “error” · “this looks wrong”</p>
+        <p>Calm diagnosis and repair; one-sentence explanation.</p>
+      </li>
+      <li>
+        <h3>undo</h3>
+        <p class="say">“undo” · “go back” · “it was better before”</p>
+        <p>Back to a save point (never loses anything).</p>
+      </li>
+      <li>
+        <h3>update</h3>
+        <p class="say">“update the kit” · “new version of the kit” · “is the kit up to date”</p>
+        <p>Replaces the system files with the current version from the AISTUDIOS kit repo; project files untouched; save point…</p>
+      </li>
+      <li>
+        <h3>handoff</h3>
+        <p class="say">“handoff” · “document it for the client”</p>
+        <p>Client-facing page (HTML/PDF), never markdown.</p>
+      </li>
+  </ul>
+
+  <h2>Never asked for — Claude loads these itself</h2>
+  <ul class="grid seven">
+      <li><h3>astro-conventions</h3><p>Project conventions for this Astro landing kit — folder structure, the section component pattern, design tokens and CSS rules,…</p></li>
+      <li><h3>design-quality</h3><p>What "high quality" means in a built landing page and how to reach it in code — fidelity to Figma, typographic and spacing…</p></li>
+      <li><h3>figma-to-code</h3><p>How to translate a Figma file into this kit — using the Figma MCP tools (get_metadata, get_variable_defs, get_design_context,…</p></li>
+      <li><h3>motion</h3><p>Motion knowledge for landing pages — the rules that make animation feel premium, the decision tree (CSS vs GSAP vs ScrollTrigger…</p></li>
+      <li><h3>qa-checklist</h3><p>The pre-ship quality checklist for a landing page built with this kit — responsive layouts at 390/834/1440/1920, accessibility…</p></li>
+      <li><h3>launch-essentials</h3><p>The non-design things every landing page needs before launch and how to add them in this kit — contact/lead forms without a…</p></li>
+      <li><h3>deploy-vercel</h3><p>How this kit goes online — the GitHub-first flow (draft/main branches, preview per push, production on merge) with Vercel's Git…</p></li>
+  </ul>
+
+  <h2>Delegated to a sub-agent</h2>
+  <ul class="grid four">
+      <li><h3>debugger</h3><p>Diagnoses and fixes errors in this Astro/GSAP project — build failures, blank previews, broken layouts after a change,…</p></li>
+      <li><h3>design-critic</h3><p>Fresh-eyes visual comparison between a built section's screenshots and its Figma export (or the reference site). Reports…</p></li>
+      <li><h3>figma-translator</h3><p>Extracts a Figma design into the kit — design tokens into src/styles/tokens.css, a design summary into brief/DESIGN.md…</p></li>
+      <li><h3>motion-designer</h3><p>Creative developer specialised in premium web motion — implements approved effects with GSAP 3.15, ScrollTrigger, Lenis,…</p></li>
+      <li><h3>qa-reviewer</h3><p>Runs the complete pre-ship quality checklist on the landing page — build, console, responsive screenshots at four…</p></li>
+  </ul>
+
+  <h2>Who owns which file</h2>
+  <div class="split">
+    <section><h3>The kit’s <span>replaced by “update the kit”</span></h3><div class="files"><code class="chip file">kit.json</code><code class="chip file">CLAUDE.md</code><code class="chip file">LICENSE</code><code class="chip file">README.md</code><code class="chip file">HANDBOOK.html</code><code class="chip file">GUIDE.html</code><code class="chip file">.mcp.json</code><code class="chip file">.claude</code><code class="chip file">docs</code><code class="chip file">scripts</code><code class="chip file">templates</code><code class="chip file">src/board</code><code class="chip file">src/scripts/motion.js</code><code class="chip file">src/styles/reset.css</code><code class="chip file">src/sections/_Example.astro</code><code class="chip file">src/assets/placeholder.svg</code></div></section>
+    <section><h3>The designer’s <span>never touched by an update</span></h3><div class="files"><code class="chip ">src/sections/</code><code class="chip ">src/styles/tokens.css</code><code class="chip ">src/styles/global.css</code><code class="chip ">src/pages/</code><code class="chip ">src/layouts/</code><code class="chip ">src/components/</code><code class="chip ">src/assets/</code><code class="chip ">public/</code><code class="chip ">brief/</code><code class="chip ">package.json</code><code class="chip ">astro.config.mjs</code></div></section>
+  </div>
+
+  <footer>Generated from the skills and CLAUDE.md by <code class="chip">npm run map</code>. Do not edit this file by hand.</footer>
+</div>
+</body>
+</html>

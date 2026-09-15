@@ -18,7 +18,8 @@
     "check": "astro check",
     "shots": "node scripts/shots.mjs",
     "setup": "npm install && npx playwright install chromium",
-    "probe": "node scripts/probe.mjs"
+    "probe": "node scripts/probe.mjs",
+    "map": "node scripts/build-map.mjs"
   },
   "dependencies": {
     "astro": "latest",
